@@ -443,26 +443,50 @@
     }
 
     .cart-table th, .cart-table td {
-        border: 1px solid #ddd;
+        border: 1px solid #333;
         padding: 10px;
         text-align: left;
     }
 
     .cart-table th {
-        background-color: #a0a0a0;
+        background-color: #555;
     }
 
     .cart-table td {
         vertical-align: top;
     }
 
-    /* Stile für den Gesamtpreis */
-    #cart-total {
-        font-size: 18px;
+    #article-number{
+        max-width: 0ch;
+    }
+    #article-name{
         font-weight: bold;
-        margin-top: 20px;
     }
 
+    #subtotal, #cart-total {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: right;
+        margin-top: 20px;
+        border-bottom: 5px solid #333;
+    }
+
+    #tax {
+        text-align: right;
+    }
+
+    .apply-button {
+        background-color: #333;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .apply-button:hover {
+        background-color: #555;
+    }
     /* Stile für den "Zur Kasse" Button */
     .order-button {
         background-color: #333;
@@ -488,22 +512,6 @@
         clear: both;
         
     }
-/*Warenkorb Footer*/
-    .footerW{
-        background: #333;
-        color: #fff;
-        text-align: center;
-        padding: 8px;
-        clear: both;
-        position: absolute;
-        bottom: 0px;
-        width: 100%;
-    }
-
-        
-        
-    
-
     .footer a{
         color: #edf5f5;
         text-decoration: none;

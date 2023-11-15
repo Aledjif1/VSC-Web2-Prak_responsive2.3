@@ -38,38 +38,63 @@
     </header>
 
  <!-- Inhalt der Webseite  -->
- <main class="content">
-    <h1>Warenkorb</h1>
-    <table class="cart-table">
-        <thead>
+    <main>
+    <div class="content">
+        <table class="cart-table">
+            <thead>
             <tr>
-                <th>Artikel</th>
-                <th>Preis</th>
+                <th id="article-number">Art.-Nr.</th>
+                <th id="article-name">Artikel</th>
+                <th id="unit-price">Einzelpreis</th>
+                <th id="quantity">Menge</th>
+                <th id="total-price">Gesamtpreis</th>
             </tr>
-        </thead>
-        <tbody id="cart-items-table">
-            <!-- Hier werden die ausgewählten Artikel angezeigt -->
-        </tbody>
-        <tfoot>
+            </thead>
+            <tbody id="cart-items-table">
+            <!-- Beispielartikel -->
             <tr>
-                <td>Gesamtpreis (ohne MwSt.):</td>
-                <td id="subtotal">€0.00</td>
+                <td id="article-number">1234</td>
+                <td id="article-name">iPhone 14, 128 GB</td>
+                <td id="unit-price">€1500.00</td>
+                <td>                    
+                    <input type="number" id="quantity" value="1" min="0" max="99">
+                    <button class="apply-button" onclick="updateTotal()">Übernehmen</button>
+                </td>
+                <td id="total-price">€1500.00</td>
             </tr>
             <tr>
-                <td>MwSt. (19%):</td>
-                <td id="tax">€0.00</td>
+                <td id="article-number">3214</td>
+                <td id="article-name">Air Pods</td>
+                <td id="unit-price">€1500.00</td>
+                <td>                    
+                    <input type="number" id="quantity" value="1" min="0" max="99">
+                    <button class="apply-button" onclick="updateTotal()">Übernehmen</button>
+                </td>
+                <td id="total-price">€1500.00</td>
+            </tr>
+            <!-- Weitere Artikel erscheinen hier -->
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="2" id="subtotal">Gesamtpreis (ohne MwSt.):</td>
+                <td colspan="3" id="subtotal">€1500.00</td>
             </tr>
             <tr>
-                <td>Gesamtpreis (inkl. MwSt.):</td>
-                <td id="cart-total">€0.00</td>
+                <td colspan="2" id="tax">MwSt. (19%):</td>
+                <td colspan="3" id="tax">€0.00</td>
             </tr>
-        </tfoot>
-    </table>
-    <button class="order-button" id="checkout-button">Bestellung abschließen</button>
-</main>
+            <tr>
+                <td colspan="2" id="cart-total">Gesamtpreis (inkl. MwSt.):</td>
+                <td colspan="3" id="cart-total">€0.00</td>
+            </tr>
+            </tfoot>
+        </table>
+        <button class="order-button" id="checkout-button">Bestellung abschließen</button>
+    </div>
+    </main>
 
     <!-- Footer-Bereich -->
-    <footer class="footerW">
+    <footer class="footer">
         &copy; 2023 iAppleSales - Alle Rechte vorbehalten | 
         <a href="about_Us.html">Über Uns</a> | 
         <a href="agb.html">AGB</a> | 
