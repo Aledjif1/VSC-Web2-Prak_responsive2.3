@@ -45,7 +45,7 @@ CREATE TABLE Produktbild (
 );
 
 -- ------------------------------
--- Person und Adresse
+-- Person, Firma und Adresse
 CREATE TABLE Land (
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	kennzeichnung TEXT NOT NULL,
@@ -73,6 +73,18 @@ CREATE TABLE Person (
 	email TEXT NOT NULL,
 	geburtstag TEXT DEFAULT NULL,
 	CONSTRAINT fk_Person1 FOREIGN KEY (adresseId) REFERENCES Adresse(id)
+);
+
+CREATE TABLE Firma (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    inhaber TEXT DEFAULT NULL,
+    beschreibung TEXT NOT NULL,
+    adresseId INTEGER NOT NULL,
+    ansprechpartnerId INTEGER DEFAULT NULL,
+    brancheId INTEGER DEFAULT NULL,
+    CONSTRAINT fk_Firma1 FOREIGN KEY (adresseId) REFERENCES Adresse(id),
+    CONSTRAINT fk_Firma2 FOREIGN KEY (ansprechpartnerId) REFERENCES Person(id)
 );
 
 -- ------------------------------
