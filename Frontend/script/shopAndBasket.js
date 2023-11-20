@@ -28,11 +28,13 @@ function renderProducts(parentNode, products) {
                     .append($('<button>')
                         .attr('type', 'button')
                         .attr('onClick', 'jumpToDetails(' + item.id + ')')
+                        .attr('class', 'add-to-cart-button')
                         .text('Details')
                     )
                     .append($('<button>')
                         .attr('type', 'button')
                         .attr('onClick', 'addToBasket(' + item.id + ')')
+                        .attr('class', 'add-to-cart-button')
                         .text('Zum Warenkorb hinzufügen')
                     )
             );
@@ -75,7 +77,7 @@ function addToBasket(id) {
         for (i = 0; i < basket.length; i++) {
             if (basket[i].product.id == productToAdd.id) {
                 posInBasket = i;
-                break;
+                break;hnm
             }
         }
 
@@ -148,6 +150,7 @@ function renderBasket(parentNode) {
                 $('<td>')
                     .append($('<button>')
                         .attr('type', 'button')
+                        .attr('class', 'add-to-cart-button')
                         .attr('onClick', 'removeBasketPosition(' + idx + ')')
                         .text('Entfernen')
                     )

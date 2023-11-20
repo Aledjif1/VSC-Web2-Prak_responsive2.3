@@ -125,18 +125,6 @@
         border: 1px solid #ccc;
         border-radius: 5px;
     }
-    .search button {
-        padding: 10px 20px;
-        background-color: #8ca6c4;
-        color: #333;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    .search button:hover {
-        background-color: #5f758b;
-    }
 
 /* Produktcontainer-Stile Home*/
     .product-container {
@@ -209,36 +197,6 @@
 
         .product-info p {
             font-size: 16px;
-        }
-
-        .add-to-cart-button {
-            background-color: #333;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .add-to-cart-button:hover {
-            background-color: #555;
-        }
-        .back-to-page-button {
-            background-color: #333;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            text-decoration: none;
-        }
-
-        .back-to-page-button:hover {
-            background-color: #555;
         }
     /* Produkt-details (unterhalb) */
         .product-details {
@@ -352,18 +310,7 @@
         margin: 0 auto;
 
     }
-    .ButtonStyle{ 
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-
-
-    }
+    
 /* Bestellseite formatierungen */
     .rightSide{ 
         flex: 1;
@@ -420,21 +367,6 @@
         font-size: 16px;
     }
 
-    #suchergebnis .add-to-cart-button {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    #suchergebnis .add-to-cart-button:hover {
-        background-color: #555;
-    }
-
 /* Stile für die Warenkorbtabelle */
     .cart-table {
         width: 100%;
@@ -475,33 +407,8 @@
         text-align: right;
     }
 
-    .apply-button {
-        background-color: #333;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 3px;
-        cursor: pointer;
-    }
-
-    .apply-button:hover {
-        background-color: #555;
-    }
-    /* Stile für den "Zur Kasse" Button */
-    .order-button {
-        background-color: #333;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        margin-top: 20px;
-    }
-
-    .order-button:hover {
-        background-color: #555;
-    }
+    
+    
 
 /* Footer-Stile */
     .footer {
@@ -519,6 +426,108 @@
 
     .footer a:hover{
         text-decoration: underline;
+    }
+
+/* Alle Buttons */
+    /* Stile für den "Zur Kasse" Button */
+    .order-button {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .order-button:hover {
+        background-color: #555;
+    }
+    /* Warenkorb */
+    .apply-button {
+        background-color: #333;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .apply-button:hover {
+        background-color: #555;
+    }
+    /* Suche Buttons*/
+    #suchergebnis .add-to-cart-button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    #suchergebnis .add-to-cart-button:hover {
+        background-color: #555;
+    }
+
+    .search button {
+        padding: 10px 20px;
+        background-color: #8ca6c4;
+        color: #333;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .search button:hover {
+        background-color: #5f758b;
+    }
+
+    /* Bestellabschluss */
+    .back-to-home-button{ 
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    /* Produktinfo (rechte Spalte) */
+    .add-to-cart-button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .add-to-cart-button:hover {
+        background-color: #555;
+    }
+    .back-to-page-button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-decoration: none;
+    }
+
+    .back-to-page-button:hover {
+        background-color: #555;
+    }
+    .product-detail-button {
+        
     }
 
 /* Stile für Tablet-Ansicht */

@@ -59,7 +59,7 @@ serviceRouter.post("/mehrwertsteuer", function(request, response) {
         errorMsgs.push("steuersatz muss eine Zahl sein");
     } else if (request.body.steuersatz <= 0) {
         errorMsgs.push("steuersatz muss eine Zahl > 0 sein");
-    }        
+    }
     
     if (errorMsgs.length > 0) {
         console.log("Service Mehrwertsteuer: Creation not possible, data missing");
