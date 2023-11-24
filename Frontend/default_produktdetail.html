@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>iSales | AirPods - Details</title>
+    <link rel="stylesheet" type="text/css" href="./././style/styles.css">
+    <script src="./script/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./script//sessionHandling.js"></script>
+    <script src="./script//shopAndBasket.js"></script>
+    <script src="./script//urlParameter.js"></script>
+</head>
+<body>
+    <!-- Header-Bereich -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="./img/iapplesales-logo-white-transparent.png" alt="iAppleSales - Logo">
+                </a>
+            </div>
+        </div>
+
+        <div class="header-center">
+            <h1>Willkommen bei iAppleSales!</h1>
+            <nav>
+                <ul class="navigation">
+                    <li><a href="kategorieseite_IPhones.html">iPhones</a></li>
+					<li><a href="kategorieseite_IPads.html">iPads</a></li>
+					<li><a href="kategorieseite_IMacs.html">iMacs</a></li>
+					<li><a href="kategorieseite_Zubehoer.html">Zubehör</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="cart">
+                <span class="cart-icon">&#128722;</span>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Suchfeld -->
+    <div class="search">
+        <input type="text" placeholder="Suche..." id="Suchbegriff">
+        <button class="search-button" onclick="window.location.href = 'suche_Ergebnis.html';">Suchen</button>
+    </div>
+
+    <!-- Inhalt der Webseite -->
+    <div class="content">
+        <table>
+            <tr>
+                <td rowspan="5" id="productPicture">Kein Bild vorhanden</td>
+                <td>ID:</td>
+                <td id="productId"></td>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td id="productName"></td>
+            </tr>
+            <tr>
+                <td>Preis:</td>
+                <td id="productPrice"></td>
+            </tr>
+            <tr>
+                <td>Beschreibung:</td>
+                <td id="productDescription"></td>
+            </tr>
+            <tr>
+                <td>Datenblatt:</td>
+                <td id="productSpecs">hab keines</td>
+            </tr>
+        </table>
+
+        <br><br>
+        <a href="default_warenkorb.html">zum Warenkorb</a>
+
+        <br><br>
+        <a href="default_shop.html">zurück zur Übersicht</a>
+    </div>
+    <!-- Footer-Bereich -->
+    <footer class="footer">
+        &copy; 2023 iAppleSales - Alle Rechte vorbehalten | 
+        <a href="about_Us.html">Über Uns</a> | 
+        <a href="agb.html">AGB</a> | 
+        <a href="datenschutz.html">Datenschutz</a> | 
+        <a href="impressum.html">Impressum</a>
+    </footer>
+
+    <script>
+
+        $(document).ready(function() {
+            console.log('loading specific product');
+
+            // get id from url parameter
+            var id = -1;
+
+            if (existsUrlParameter('id')) 
+                id = getUrlParameterValue('id');
+
+            console.log('target product id=' + id);
+
+            if (id == -1) {
+                alert('keine id erhalten');
+                return;
+            }                
+			
+			$.ajax({
+                url: 'http://localhost:8000/api/produkt/gib/' + id,
+                method: 'get',
+                contentType: 'application/json; charset=utf-8',
+                cache: false,
+				dataType: 'json'
+            }).done(function (response) {
+                console.log(response);
+                
+                /* hier können Sie das Produkt nach eigenen Wünschen rendern und ausgeben. Ich mache es mir einfach und gebe nur einen Teil aus */
+
+                $('#productId').text(response.id);
+                $('#productName').text(response.bezeichnung);
+                $('#productPrice').text(formatToEuro(response.bruttopreis));
+                $('#productDescription').text(response.beschreibung);
+
+                if (response.datenblatt != null) {
+                    $('#productSpecs').html('<a href="http://localhost:8000/' + response.datenblatt.dateipfad + '" target="_blank">Datenblatt</a>');
+                }
+
+                if (response.bilder != null) {
+                    if (response.bilder.length > 0) {
+                        var pic = response.bilder[0];
+                        $('#productPicture').html('<img src="http://localhost:8000/' + pic.bildpfad + '" title="' + response.bezeichnung+ '" alt="' + response.bezeichnung+ '">');
+                    }
+                }
+
+            }).fail(function (jqXHR, statusText, error) {
+                console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
+                alert('Ein Fehler ist aufgetreten');
+            });
+        });
+
+        
+    </script>
+</body>
+</html>
