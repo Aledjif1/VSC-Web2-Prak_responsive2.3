@@ -148,7 +148,7 @@
                 $('#productId').text(response.id);
                 $('#productName').text(response.bezeichnung);
                 $('#productPrice').text(formatToEuro(response.bruttopreis));
-                $('#productDescription').text(response.beschreibung);
+                $('#productDescription').html(response.beschreibung);
                 $('#productDetails').html(response.details);
                 $('#productTax').text(response.mehrwertsteueranteil);
                 $('#productCategory').text(response.kategorie.bezeichnung);
