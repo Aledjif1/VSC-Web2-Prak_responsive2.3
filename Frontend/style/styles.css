@@ -545,6 +545,12 @@
         min-width: 200px;
 }
 
+/* CSS für einlinienanzeige */
+
+.oneliner{
+    white-space: nowrap;
+}
+
 /* Stile für Tablet-Ansicht */
    @media only screen and (max-width: 1137px) {
     /* zwei Produkte pro Zeile */
