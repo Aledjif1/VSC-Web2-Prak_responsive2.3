@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>iSales | Zusammenfassung</title>
+    <link rel="stylesheet" type="text/css" href="./style/styles.css">
+    <script src="./script/script.js"></script>
+</head>
+<body>
+    <!-- Header-Bereich -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="./img/iapplesales-logo-white-transparent.png" alt="iAppleSales - Logo">
+                </a>
+            </div>
+        </div>
+
+        <div class="header-center">
+            <h1> Willkommen bei IAppleSales! </h1>
+            <nav>
+                <ul class="navigation">
+					<li><a href="kategorieseite_IPhones.html">iPhones</a></li>
+					<li><a href="kategorieseite_IPads.html">iPads</a></li>
+					<li><a href="kategorieseite_IMacs.html">iMacs</a></li>
+					<li><a href="kategorieseite_Zubehoer.html">Zubehör</a></li>
+            </ul>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="cart">
+                <span class="cart-icon">&#128722;</span>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+
+
+    <!-- Inhalt der Bestellseite -->
+    <div class="container">
+        <div class="rightSide">
+            <h2>Warenkorb</h2>
+            <ul id="selected-items"> <div class="content">
+                <table class="cart-table">
+                    <thead>
+                    <tr>
+                        <th id="article-number">Nr.</th>
+                        <th id="article-name">Artikel</th>
+                        <th id="unit-price">Einzelpreis</th>
+                        <th id="quantity">Menge</th>
+                        <th id="total-price">Gesamtpreis</th>
+                    </tr>
+                    </thead>
+                    <tbody id="cart-items-table">
+                    <!-- Beispielartikel -->
+                    <tr>
+                        <td id="article-number">1234</td>
+                        <td id="article-name">iPhone 14, 128 GB</td>
+                        <td id="unit-price">€1500.00</td>
+                        <td> 1 </td>
+                        <td id="total-price">€1500.00</td>
+                    </tr>
+                    <tr>
+                        <td id="article-number">3214</td>
+                        <td id="article-name">Air Pods</td>
+                        <td id="unit-price">€1500.00</td>
+                        <td>  1 </td>
+                        <td id="total-price">€1500.00</td>
+                    </tr>
+                    <!-- Weitere Artikel erscheinen hier -->
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="2" id="subtotal">Gesamtpreis (ohne MwSt.):</td>
+                        <td colspan="3" id="subtotal">€1500.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="tax">MwSt. (19%):</td>
+                        <td colspan="3" id="tax">€0.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="cart-total">Gesamtpreis (inkl. MwSt.):</td>
+                        <td colspan="3" id="cart-total">€0.00</td>
+                    </tr>
+                    </tfoot>
+                </table>
+                
+            </div>
+                <!-- Hier werden die ausgewählten Artikel angezeigt -->
+            </ul>
+           
+        </div>
+            <!-- Bestellformular -->
+        <div class="leftSide">
+            <form id="order-form" action="bestellabschluss.html">
+                <h2>Bestellformular</h2>
+                <div class="form-group">
+                    <label for="anrede">Anrede:</label>
+                    <select id="anrede" name="anrede">
+                        <option value="Herr">Herr</option>
+                        <option value="Frau">Frau</option>
+                    </select>
+                </div>
+                    <div class="form-row">
+                    <div class="form-group">
+                        <label for="vorname">Vorname:</label>
+                        <input type="text" id="vorname" name="vorname" placeholder="Vorname eingeben..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nachname">Nachname:</label>
+                        <input type="text" id="nachname" name="nachname" placeholder="Nachname eingeben..." required>
+                    </div>
+                    </div>
+
+                    <div class="form-row">    
+                    <div class="form-group">
+                        <label for="firma">Firma (optional):</label>
+                        <input type="text" id="firma" name="firma" placeholder="Firma eingeben...">
+                    </div>
+                    <div class="form-group">
+                        <label for="ust-id">UST-ID (optional):</label>
+                        <input type="text" id="ust-id" name="ust-id" placeholder="UST-ID eingeben...">
+                    </div>
+                    </div>
+
+                <div class="form-group">
+                    <label for="email">E-Mail:</label>
+                    <input type="email" id="email" name="email" placeholder="E-Mail eingeben..." required>
+                </div>
+                <div class="form-group">
+                    <label for="strasse-nr">Straße und Hausnr:</label>
+                    <input type="text" id="strasse-nr" name="strasse-nr" placeholder="Straße und Hausnr eingeben..." required>
+                </div>
+
+                    <div class="form-row">
+                    <div class="form-group">
+                        <label for="plz">PLZ:</label>
+                        <input type="text" id="plz" name="plz" placeholder="PLZ eingeben..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ort">Ort:</label>
+                        <input type="text" id="ort" name="ort" placeholder="Ort eingeben..." required>
+                    </div>
+                    </div>
+
+                <div class="form-group">
+                    <label for="land">Land:</label>
+                    <input type="text" id="land" name="land" placeholder="Land eingeben..." required>
+                </div>
+
+                <div class="form-group">
+                    <label class="custom-checkbox">Ich habe die <a href="agb.html">AGB</a> und <a href="datenschutz.html">Datenschutzerklärung</a> gelesen und akzeptiert:
+                    <input type="checkbox" id="agb-datenschutz" name="agb-datenschutz" required>
+                    <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <a class="back-to-page-button" href="warenkorb.html">zurück zum Warenkorb</a>
+                    <button type="submit" class="add-to-cart-button">Bestellung abschicken</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+
+    <!-- Footer-Bereich -->
+    <footer class="footer">
+        &copy; 2023 iAppleSales - Alle Rechte vorbehalten | 
+        <a href="about_Us.html">Über Uns</a> | 
+        <a href="AGB.html">AGB</a> | 
+        <a href="datenschutz.html">Datenschutz</a> | 
+        <a href="impressum.html">Impressum</a>
+    </footer>
+</body>
+</html>
