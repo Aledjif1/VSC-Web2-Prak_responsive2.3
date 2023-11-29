@@ -47,33 +47,6 @@
 
     <!-- Inhalt der Webseite -->
     <div class="content">
-        <!-- <table>
-            <tr>
-                <td rowspan="5" id="productPicture">Kein Bild vorhanden</td>
-                 <td>ID:</td>
-                <td id="productId"></td>
-            </tr>
-            <tr>
-                <td>Name:</td>
-                <td id="productName"></td>
-            </tr>
-            <tr>
-                <td>Preis:</td>
-                <td id="productPrice"></td>
-            </tr>
-            <tr>
-                <td>Beschreibung:</td>
-                <td id="productDescription"></td>
-            </tr>
-            <tr>
-                <td>Datenblatt:</td>
-                <td id="productSpecs">hab keines</td>
-            </tr>
-        </table>-->
-
-        <!-- Trennseite für meinen Code-->
-
-        <h2>Produktkategorie:</h2><p id="productCategory"></p>
         <div class="product-name">
             <h2 id="productName">Produktname</h2>
         </div>
@@ -85,10 +58,12 @@
             <!-- Kurzinformationen rechts davon -->
             <div class="product-info">
                 <p id="productDescription"></p>
-                <h2 class="product-price" id="productPrice"></h2>
-                <h3> versandkostenfrei</h3>
-                <h3> Mehrwertsteueranteil:</h3> <p id="productTax"></p>
-                <h3>Lieferzeit: 1-3 Werktage</h3>
+                <div class="oneliner">
+                    <h2 class="product-price">Preis:</h2>
+                    <h2 class="product-price" id="productPrice"></h2>
+                </div>
+                <h4>enthaltene MwSt:</h4><p id="productTax"></p>
+                <p>Lieferzeit: 1-3 Werktage</p>
                 <h4>Versandkostenfrei</h4>
                 <button class="add-to-cart-button">In den Warenkorb</button>
                 <a class="back-to-page-button" href="kategorieseite_Zubehoer.html">zurück zur Übersicht</a>
@@ -98,14 +73,6 @@
         <div class="product-details">
             <p id="productDetails"></p>
         </div>
-    
-
-
-        <br><br>
-        <a href="default_warenkorb.html">zum Warenkorb</a>
-
-        <br><br>
-        <a href="default_shop.html">zurück zur Übersicht</a>
     </div>
     <!-- Footer-Bereich -->
     <footer class="footer">
