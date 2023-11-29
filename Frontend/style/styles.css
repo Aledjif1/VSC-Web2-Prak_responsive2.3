@@ -24,7 +24,7 @@
     }
 
     .content {
-        margin: 20px;
+        margin: 30px;
     }
     .container {
         width: 100%;
@@ -170,7 +170,7 @@
 /* Produkt_Detailseite-Stile */
     .product-detail-container {
         display: flex;
-        justify-content: space-between;
+        justify-content:space-between;
         margin: 0px;
     }
     /* Produkt-Bild*/
@@ -407,9 +407,6 @@
         text-align: right;
     }
 
-    
-    
-
 /* Footer-Stile */
     .footer {
         background: #333;
@@ -526,9 +523,6 @@
     .back-to-page-button:hover {
         background-color: #555;
     }
-    .product-detail-button {
-        
-    }
 
 #produktliste{
     display: flex;
@@ -543,12 +537,6 @@
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         flex: 1;
         min-width: 200px;
-}
-
-/* CSS für einlinienanzeige */
-
-.oneliner{
-    white-space: nowrap;
 }
 
 /* Stile für Tablet-Ansicht */
