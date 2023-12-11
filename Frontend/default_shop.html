@@ -96,8 +96,8 @@
                         produktHTML += '<h2>Preis: ' + produkt.bruttopreis + '€ inkl. MwSt <br> versandkostenfrei</h2>'; 
                         produktHTML += produkt.kurzbeschreibung;
                         produktHTML += '<br>';
-                        produktHTML += '<a href="default_produktdetail.html?id=' + produkt.id +'">';
-                        produktHTML += '<button class="add-to-cart-button">zum Produkt</button> </a>';
+                        produktHTML += '<button class="add-to-cart-button" onclick="jumpToDetails('+ produkt.id + ')">zum Produkt</button>';
+                        produktHTML += '<button class="add-to-cart-button" onclick="addToBasket('+ produkt.id + ')">Zum Warenkorb hinzufügen</button>';
                         // Abschluss des Renderns
                         produktHTML += '</div>';
                         produktListeElement.append(produktHTML);

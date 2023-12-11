@@ -65,7 +65,7 @@
                 <h4>enthaltene MwSt:</h4><p id="productTax"></p>
                 <p>Lieferzeit: 1-3 Werktage</p>
                 <h4>Versandkostenfrei</h4>
-                <button class="add-to-cart-button">In den Warenkorb</button>
+                <button class="add-to-cart-button" onclick="addToBasket(productId)">In den Warenkorb</button>
                 <a class="back-to-page-button" href="kategorieseite_Zubehoer.html">zurück zur Übersicht</a>
             </div>
         </div>
@@ -82,7 +82,6 @@
         <a href="datenschutz.html">Datenschutz</a> | 
         <a href="impressum.html">Impressum</a>
     </footer>
-
     <script>
 
         $(document).ready(function() {
@@ -111,8 +110,8 @@
                 console.log(response);
                 
                 /* hier können Sie das Produkt nach eigenen Wünschen rendern und ausgeben. Ich mache es mir einfach und gebe nur einen Teil aus */
-
                 $('#productId').text(response.id);
+                var productId = response.id;
                 $('#productName').text(response.bezeichnung);
                 $('#productPrice').text(formatToEuro(response.bruttopreis));
                 $('#productDescription').html(response.beschreibung);

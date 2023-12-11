@@ -141,7 +141,7 @@ function renderBasket(parentNode) {
             node.append($('<td>').append(
                 $('<a>')
                     .attr('href', 'default_produktdetail.html?id=' + item.product.id)
-                    .text(item.product.bezeichnung + ' (ID: ' + item.product.id + ')')
+                    .text(item.product.bezeichnung + ' (Art.-Nr.: ' + item.product.id + ')')
             ));
             node.append($('<td>').text(formatToEuro(item.product.bruttopreis)));
             node.append($('<td>').text(item.amount));
@@ -162,8 +162,8 @@ function renderBasket(parentNode) {
 
         $(parentNode)
             .append('<tr><td colspan="6">&nbsp;</td></tr>')
-            .append('<tr><td colspan="4" class="rightBold">Gesamtsumme: </td><td class="bold">' + formatToEuro(totalSum) + '</td></tr>')
-            .append('<tr><td colspan="4" class="rightBold">enth. MwSt.: </td><td class="bold">' + formatToEuro(totalTax) + '</td></tr>')
+            .append('<tr><td colspan="4" class="cart-total">Gesamtsumme: </td><td class="bold">' + formatToEuro(totalSum) + '</td></tr>')
+            .append('<tr><td colspan="4" class="tax">enth. MwSt.: </td><td class="bold">' + formatToEuro(totalTax) + '</td></tr>')
             .append('<tr><td colspan="6">&nbsp;</td></tr>');
     }
 }
