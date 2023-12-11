@@ -139,6 +139,8 @@
                         produktHTML += '<div class="product-text">';
                         produktHTML += '<h2>Preis: ' + produkt.bruttopreis + '€ inkl. MwSt <br> versandkostenfrei</h2>'; 
                         produktHTML += produkt.beschreibung;
+                        produktHTML += '<a href="default_produktdetail.html?id=' + produkt.id +'">';
+                        produktHTML += '<button class="add-to-cart-button">zum Produkt</button> </a>';
                         // Abschluss des Renderns
                         produktHTML += '</div>';
                         produktListeElement.append(produktHTML);
