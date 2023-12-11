@@ -162,8 +162,8 @@ function renderBasket(parentNode) {
 
         $(parentNode)
             .append('<tr><td colspan="6">&nbsp;</td></tr>')
-            .append('<tr><td colspan="4" class="cart-total">Gesamtsumme: </td><td class="bold">' + formatToEuro(totalSum) + '</td></tr>')
-            .append('<tr><td colspan="4" class="tax">enth. MwSt.: </td><td class="bold">' + formatToEuro(totalTax) + '</td></tr>')
+            .append('<tr><td colspan="4" class="cart-total">Gesamtsumme: </td><td colspan="2" class="bold">' + formatToEuro(totalSum) + '</td></tr>')
+            .append('<tr><td colspan="4" class="tax">enth. MwSt.: </td><td colspan="2" class="bold">' + formatToEuro(totalTax) + '</td></tr>')
             .append('<tr><td colspan="6">&nbsp;</td></tr>');
     }
 }
