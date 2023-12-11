@@ -47,38 +47,6 @@
 
     <!-- Inhalt der Webseite  -->
     <div class="content">
-        <!--
-        <h1>Rudimentärer Shop</h1>
-
-        <p>
-            <a href="default_warenkorb.html">Zum Warenkorb</a>
-        </p>
-
-		<table id="produktliste">
-            <thead>
-                <tr>
-                    <th>Pos</th>
-                    <th>ID</th>
-                    <th>Kategorie</th>
-                    <th>Name</th>
-                    <th>Preis</th>
-                    <th>&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            </tbody>            
-        </table>
-
-        <p>
-            <a href="default_warenkorb.html">Zum Warenkorb</a>
-        </p>
-
-        <p>
-            <b>WICHTIG: Bitte lassen Sie sich auch die Browser-Konsole anzeigen</b>
-        </p>
-        <br><br> -->
-        <h1>Mein neuer Code:</h1>
         <!-- Produkt-Schaufenster -->
         <div class="product-container" id="productList">
             <!-- Erstes Produkt -->
@@ -96,7 +64,7 @@
                         <button class="add-to-cart-button">zum Produkt</button>
                     </a>
                 </div>
-            </div>
+            </div> 
     </div>
 
     <!-- Footer-Bereich -->
@@ -131,14 +99,17 @@
                         produktHTML += '<div class="product-picture">';
                         var pic = produkt.bilder[0];
                         var bildpfad = 'http://localhost:8000/' + pic.bildpfad; 
+                        produktHTML += '<a href="default_produktdetail.html?id=' + produkt.id +'">';
                         produktHTML += '<img src="' + bildpfad + '" class="product-image">';
+                        produktHTML += '</a>';
                         produktHTML += '</div>';
                         produktHTML += '<div class="product-title">';
                         produktHTML += '<h2>' + produkt.bezeichnung + '</h2>';
                         produktHTML += '</div>';
                         produktHTML += '<div class="product-text">';
                         produktHTML += '<h2>Preis: ' + produkt.bruttopreis + '€ inkl. MwSt <br> versandkostenfrei</h2>'; 
-                        produktHTML += produkt.beschreibung;
+                        produktHTML += produkt.kurzbeschreibung;
+                        produktHTML += '<br>';
                         produktHTML += '<a href="default_produktdetail.html?id=' + produkt.id +'">';
                         produktHTML += '<button class="add-to-cart-button">zum Produkt</button> </a>';
                         // Abschluss des Renderns
