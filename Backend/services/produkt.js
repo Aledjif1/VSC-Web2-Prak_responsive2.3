@@ -19,6 +19,20 @@ serviceRouter.get('/produkt/gib/:id', function(request, response) {
     }
 });
 
+serviceRouter.get('/produkt/gib/kategorie/:categoryid', function(request, response) {
+    console.log('Service Produkt: Client requested one record, categoryid=' + request.params.categoryid);
+
+    const produktDao = new ProduktDao(request.app.locals.dbConnection);
+    try {
+        var obj = produktDao.loadByCategoryId(request.params.id);
+        console.log('Service Produkt: Record loaded');
+        response.status(200).json(obj);
+    } catch (ex) {
+        console.error('Service Produkt: Error loading record by categoryid. Exception occured: ' + ex.message);
+        response.status(400).json({ 'fehler': true, 'nachricht': ex.message });
+    }
+});
+
 serviceRouter.get('/produkt/alle', function(request, response) {
     console.log('Service Produkt: Client requested all records');
 
