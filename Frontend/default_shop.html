@@ -47,6 +47,7 @@
 
     <!-- Inhalt der Webseite  -->
     <div class="content">
+        <!--
         <h1>Rudimentärer Shop</h1>
 
         <p>
@@ -76,6 +77,26 @@
         <p>
             <b>WICHTIG: Bitte lassen Sie sich auch die Browser-Konsole anzeigen</b>
         </p>
+        <br><br> -->
+        <h1>Mein neuer Code:</h1>
+        <!-- Produkt-Schaufenster -->
+        <div class="product-container" id="productList">
+            <!-- Erstes Produkt -->
+            <div class="product">
+                <div class="product-picture">
+                    <img src="./img/iPhone_15.png" alt="iPhone 15" class="product-image">
+                </div>
+                <div class="product-title">
+                    <h2>iPhone 15</h2>
+                </div>
+                <div class="product-text">
+                    <h2> Preis: 1249,- € inkl. MwSt. <br> versandkostenfrei</h2>
+                    <p>128GB, Verbesserte Kamera, OLED Display, A15 Bionic Chip</p>
+                    <a href="default_produktdetail.html?id=3">
+                        <button class="add-to-cart-button">zum Produkt</button>
+                    </a>
+                </div>
+            </div>
     </div>
 
     <!-- Footer-Bereich -->
@@ -98,7 +119,32 @@
 				dataType: 'json'
             }).done(function (response) {
                 console.log(response);
-                renderProducts('#produktliste > tbody', response);
+                renderProducts(response);
+
+                function renderProducts(produkte) {
+                    var produktListeElement = $('#productList');
+
+                    // Itteration durch die Produkte
+                    for (var i = 0; i < produkte.length; i++) {
+                        var produkt = response[i];
+                        var produktHTML = '<div class="product">';
+                        produktHTML += '<div class="product-picture">';
+                        var pic = produkt.bilder[0];
+                        var bildpfad = 'http://localhost:8000/' + pic.bildpfad; 
+                        produktHTML += '<img src="' + bildpfad + '" class="product-image">';
+                        produktHTML += '</div>';
+                        produktHTML += '<div class="product-title">';
+                        produktHTML += '<h2>' + produkt.bezeichnung + '</h2>';
+                        produktHTML += '</div>';
+                        produktHTML += '<div class="product-text">';
+                        produktHTML += '<h2>Preis: ' + produkt.bruttopreis + '€ inkl. MwSt <br> versandkostenfrei</h2>'; 
+                        produktHTML += produkt.beschreibung;
+                        // Abschluss des Renderns
+                        produktHTML += '</div>';
+                        produktListeElement.append(produktHTML);
+                    };
+                }
+
             }).fail(function (jqXHR, statusText, error) {
                 console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
                 alert('Ein Fehler ist aufgetreten');
