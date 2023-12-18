@@ -54,6 +54,21 @@ function formatToEuro(val) {
 function jumpToDetails(id) {
     location.href = 'default_produktdetail.html?id=' + id;
 }
+/* Zähler für Warenkorb */
+    // Zähler für den Warenkorb auf 0 setzen
+    let itemCount = 0;
+    // Funktion zum Erhöhen des Zählers und Aktualisieren des Warenkorbs
+    function increaseCartCount() {
+        const addToCartButtons = document.querySelectorAll(".add-to-cart-button");        
+        itemCount++;
+        cartCount.textContent = itemCount;
+    }
+    // Füge Event-Listener zu den Buttons mit der Klasse "add-to-cart-button" hinzu
+    addToCartButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            increaseCartCount();
+        });
+    });
 
 function addToBasket(id) {
 
