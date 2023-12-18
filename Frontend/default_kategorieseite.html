@@ -129,10 +129,22 @@
     </footer>
     <script>
         $(document).ready(function() {
-            console.log('loading all products');
 			
+            // get id from url parameter
+            var id = -1;
+
+            if (existsUrlParameter('id')) 
+                id = getUrlParameterValue('id');
+
+            console.log('target category id=' + id);
+
+            if (id == -1) {
+                alert('keine id erhalten');
+                return;
+            }  
+
 			$.ajax({
-                url: 'http://localhost:8000/api/produkt/gib/kategorieId/',
+                url: 'http://localhost:8000/api/produkt/gib/kategorieId/' + id,
                 method: 'get',
                 contentType: 'application/json; charset=utf-8',
                 cache: false,
