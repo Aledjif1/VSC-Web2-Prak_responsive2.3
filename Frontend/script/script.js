@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
 /* Warenkorb button */
     // Funktion zum Weiterleiten zur Warenkorbseite
     function navigateToCartPage() {
-        window.location.href = "warenkorb.html";
+        window.location.href = "default_warenkorb.html";
     }
     // Füge Event-Listener zum Warenkorb-Symbol hinzu
     if (cartIcon) {
@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Funktion zum Erhöhen des Zählers und Aktualisieren des Warenkorbs
     function increaseCartCount() {
         itemCount++;
-        cartCount.textContent = itemCount;
+        console.log(itemCount)
+        document.querySelector(".cart-count").textContent = itemCount;
     }
     // Füge Event-Listener zu den Buttons mit der Klasse "add-to-cart-button" hinzu
     addToCartButtons.forEach(function(button) {
@@ -40,24 +41,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Füge Event-Listener zum Order-Button hinzu
     if (orderButton) {
         orderButton.addEventListener("click", navigateToOrderPage);
-    }
-
-    // Warenkorb Berechnung
-    function updateTotal() {
-        // Holen Sie sich die Werte von quantity und unit-price
-        var quantityInput = document.getElementById("quantity");
-        var unitPriceElement = document.getElementById("unit-price");
-        var totalPriceElement = document.getElementById("total-price");
-    
-        var quantity = parseInt(quantityInput.value, 10);
-        var unitPrice = parseFloat(unitPriceElement.textContent.replace("€", "")); // Entferne das Euro-Zeichen und parse den Wert
-    
-        // Berechne den Gesamtpreis und setze ihn in das entsprechende Element
-        var totalPrice = quantity * unitPrice;
-        totalPriceElement.textContent = "€" + totalPrice.toFixed(2);
-    
-        // Rufe die Funktion auf, um den Gesamtpreis des Warenkorbs zu aktualisieren
-        updateCartTotal();
     }
 
 /* Suche */

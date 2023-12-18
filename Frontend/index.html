@@ -4,6 +4,10 @@
     <title>iSales | Home</title>
     <link rel="stylesheet" type="text/css" href="./style/styles.css">
     <script src="./script/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./script//sessionHandling.js"></script>
+    <script src="./script//shopAndBasket.js"></script>
+
 </head>
 <body>
     <!-- Header-Bereich -->
@@ -20,10 +24,10 @@
             <h1> Willkommen bei IAppleSales! </h1>
             <nav>
                 <ul class="navigation">
-                    <li><a href="kategorieseite_IPhones.html">iPhones</a></li>
-                    <li><a href="kategorieseite_IPads.html">iPads</a></li>
-                    <li><a href="kategorieseite_IMacs.html">iMacs</a></li>
-                    <li><a href="kategorieseite_Zubehoer.html">Zubehör</a></li>
+                    <li><a href="kategorieseite_IPhones.html">iPhones</a></li>  <!--Neuer Link: kategorieseite.html?id=1-->
+                    <li><a href="kategorieseite_IPads.html">iPads</a></li>      <!--Neuer Link: kategorieseite.html?id=2-->
+                    <li><a href="kategorieseite_IMacs.html">iMacs</a></li>      <!--Neuer Link: kategorieseite.html?id=3-->
+                    <li><a href="kategorieseite_Zubehoer.html">Zubehör</a></li> <!--Neuer Link: kategorieseite.html?id=4-->
                 </ul>
             </nav>
         </div>
@@ -44,76 +48,11 @@
     <!-- Inhalt der Webseite  -->
     <div class="content">
         <div class="banner">
-            <h2>Entdecke auf unserer Seite eine Vielzahl von Produkten rund um Apple.</h2> 
+            <h2>Entdecke auf unserer Seite eine Vielzahl von Produkten rund um Apple!</h2> 
         </div>
         <!-- Produkt-Schaufenster -->
-        <div class="product-container">
-            <!-- Erstes Produkt -->
-            <div class="product">
-                <div class="product-picture">
-                    <img src="./img/iPhone_15.png" alt="iPhone 15" class="product-image">
-                </div>
-                <div class="product-title">
-                    <h2>iPhone 15</h2>
-                </div>
-                <div class="product-text">
-                    <h2> Preis: 1249,- € inkl. MwSt. <br> versandkostenfrei</h2>
-                    <p>128GB, Verbesserte Kamera, OLED Display, A15 Bionic Chip</p>
-                    <a href="default_produktdetail.html?id=3">
-                        <button class="add-to-cart-button">zum Produkt</button>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Zweites Produkt -->
-            <div class="product">
-                <div class="product-picture">
-                    <img src="./img/iPad_Pro.png" alt="iPad Pro" class="product-image">
-                </div>
-                <div class="product-title">
-                    <h2>iPad Pro</h2>
-                </div>
-                <div class="product-text">
-                    <h2> Preis: 1449,- € inkl. MwSt. <br> versandkostenfrei</h2>
-                    <p>12.9", 2018 3. Gen, 64GB, 6GB Ram, Space Grau</p>
-                    <a href="default_produktdetail.html?id=7">
-                        <button class="add-to-cart-button">zum Produkt</button>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Drittes Produkt -->
-            <div class="product">
-                <div class="product-picture">
-                    <img src="./img/iMac_big.png" alt="iMac 27" class="product-image">
-                </div>
-                <div class="product-title">
-                    <h2>iMac 27"</h2>
-                </div>
-                <div class="product-text">
-                    <h2> Preis: 1699,- € inkl. MwSt. <br> versandkostenfrei</h2>
-                    <p>2020 Model, 5k Retina Display, 32GB Ram, 512GB SSD, M1 Chip</p>
-                    <a href="default_produktdetail.html?id=12">
-                        <button class="add-to-cart-button">zum Produkt</button>
-                    </a>
-                </div>
-            </div>
-            <!-- Viertes Produkt -->
-            <div class="product">
-                <div class="product-picture">
-                    <img src="./img/Watch.png" alt="Apple Watch" class="product-image">
-                </div>
-                <div class="product-title">
-                    <h2>Apple Watch</h2>
-                </div>
-                <div class="product-text">
-                    <h2> Preis: 799,- € inkl. MwSt. <br> versandkostenfrei</h2>
-                    <p>2020 Model, 5k Retina Display, 32GB Ram, 512GB SSD, M1 Chip</p>
-                    <a href="default_produktdetail.html?id=15">
-                        <button class="add-to-cart-button">zum Produkt</button>
-                    </a>
-                </div>
-            </div>
+        <div class="product-container" id="productList">
+            
         </div>
     </div>
 
@@ -125,5 +64,54 @@
         <a href="datenschutz.html">Datenschutz</a> | 
         <a href="impressum.html">Impressum</a>
     </footer>
+    <script>
+        $(document).ready(function() {
+            console.log('loading all products');
+			
+			$.ajax({
+                url: 'http://localhost:8000/api/produkt/alle',
+                method: 'get',
+                contentType: 'application/json; charset=utf-8',
+                cache: false,
+				dataType: 'json'
+            }).done(function (response) {
+                console.log(response);
+                renderProducts(response);
+
+                function renderProducts(produkte) {
+                    var produktListeElement = $('#productList');
+
+                    // Itteration durch die Produkte
+                    for (var i = 0; i < produkte.length; i++) {
+                        var produkt = response[i];
+                        var produktHTML = '<div class="product">';
+                        produktHTML += '<div class="product-picture">';
+                        var pic = produkt.bilder[0];
+                        var bildpfad = 'http://localhost:8000/' + pic.bildpfad; 
+                        produktHTML += '<a href="default_produktdetail.html?id=' + produkt.id +'">';
+                        produktHTML += '<img src="' + bildpfad + '" class="product-image">';
+                        produktHTML += '</a>';
+                        produktHTML += '</div>';
+                        produktHTML += '<div class="product-title">';
+                        produktHTML += '<h2>' + produkt.bezeichnung + '</h2>';
+                        produktHTML += '</div>';
+                        produktHTML += '<div class="product-text">';
+                        produktHTML += '<h2>Preis: ' + produkt.bruttopreis + '€ <br>inkl. MwSt</h2> <h4>versandkostenfrei</h4> <br>'; 
+                        produktHTML += produkt.kurzbeschreibung;
+                        produktHTML += '<br>';
+                        produktHTML += '<button class="product-detail-button" onclick="jumpToDetails('+ produkt.id + ')">Details</button>';
+                        produktHTML += '<button class="add-to-cart-button" onclick="addToBasket('+ produkt.id + ')">Zum Warenkorb hinzufügen</button>';
+                        // Abschluss des Renderns
+                        produktHTML += '</div>';
+                        produktListeElement.append(produktHTML);
+                    };
+                }
+
+            }).fail(function (jqXHR, statusText, error) {
+                console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
+                alert('Ein Fehler ist aufgetreten');
+            });
+        });
+    </script>
 </body>
 </html>
