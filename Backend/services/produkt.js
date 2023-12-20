@@ -20,7 +20,7 @@ serviceRouter.get('/produkt/gib/:id', function(request, response) {
 });
 
 serviceRouter.get('/produkt/gib/kategorieId/:id', function(request, response) {
-    console.log('Service Produkt: Client requested one record, categoryid=' + request.params.categoryid);
+    console.log('Service Produkt: Client requested one record, categoryid=' + request.params.id);
 
     const produktDao = new ProduktDao(request.app.locals.dbConnection);
     try {
