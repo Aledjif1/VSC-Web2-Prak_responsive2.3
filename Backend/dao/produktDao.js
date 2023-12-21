@@ -83,17 +83,16 @@ class ProduktDao {
         return result;
     }
 
-    loadAllByKeyword(keyword) {
+    loadAllByKeyword(id) {
         const produktkategorieDao = new ProduktkategorieDao(this._conn);
         const mehrwertsteuerDao = new MehrwertsteuerDao(this._conn);
-        const produktbildDao = new ProduktbildDao(this._conn);
         const downloadDao = new DownloadDao(this._conn);
+        const produktbildDao = new ProduktbildDao(this._conn);
 
-        var sql = "SELECT * FROM Produkt WHERE UPPER(bezeichnung) LIKE UPPER('%" + keyword + "%')";
+        var sql = "SELECT * FROM Produkt WHERE UPPER(bezeichnung) LIKE UPPER('%?%')";
+        
         var statement = this._conn.prepare(sql);
-        var result = statement.all(keyword);
-
-        console.log('Result from database:', result);
+        var result = statement.all(id);
 
         if (helper.isArrayEmpty(result)) 
             return [];

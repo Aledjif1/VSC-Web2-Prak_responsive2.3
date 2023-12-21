@@ -33,6 +33,20 @@ serviceRouter.get('/produkt/gib/kategorieId/:id', function(request, response) {
     }
 });
 
+serviceRouter.get('/produkt/gib/suchanfrage/:keyword', function(request, response) {
+    console.log('Service Produkt: Client requested one record, categoryid=' + request.params.id);
+
+    const produktDao = new ProduktDao(request.app.locals.dbConnection);
+    try {
+        var obj = produktDao.loadAllByKeyword(request.params.id);
+        console.log('Service Produkt: Record loaded');
+        response.status(200).json(obj);
+    } catch (ex) {
+        console.error('Service Produkt: Error loading record by keyword. Exception occured: ' + ex.message);
+        response.status(400).json({ 'fehler': true, 'nachricht': ex.message });
+    }
+});
+
 serviceRouter.get('/produkt/alle', function(request, response) {
     console.log('Service Produkt: Client requested all records');
 
