@@ -4,6 +4,7 @@
     <title>iSales | Zusammenfassung</title>
     <link rel="stylesheet" type="text/css" href="./style/styles.css">
     <script src="script/script.js"></script>
+    <script src="script/shopAndBasket.js"></script>
 </head>
 <body>
     <!-- Header-Bereich -->
@@ -39,57 +40,26 @@
 
     <!-- Inhalt der Bestellseite -->
     <div class="container">
+        <!-- Warenkorb -->
         <div class="rightSide">
             <h2>Warenkorb</h2>
             <ul id="selected-items"> <div class="content">
-                <table class="cart-table">
+                <table class="cart-table" id="basket">
                     <thead>
                     <tr>
-                        <th id="article-number">Nr.</th>
+                        <th id="article-number">Pos.</th>
                         <th id="article-name">Artikel</th>
                         <th id="unit-price">Einzelpreis</th>
                         <th id="quantity">Menge</th>
                         <th id="total-price">Gesamtpreis</th>
+                        <th id="total-price">Aktion</th>
                     </tr>
                     </thead>
                     <tbody id="cart-items-table">
-                    <!-- Beispielartikel -->
-                    <tr>
-                        <td id="article-number">1234</td>
-                        <td id="article-name">iPhone 14, 128 GB</td>
-                        <td id="unit-price">€1500.00</td>
-                        <td> 1 </td>
-                        <td id="total-price">€1500.00</td>
-                    </tr>
-                    <tr>
-                        <td id="article-number">3214</td>
-                        <td id="article-name">Air Pods</td>
-                        <td id="unit-price">€1500.00</td>
-                        <td>  1 </td>
-                        <td id="total-price">€1500.00</td>
-                    </tr>
-                    <!-- Weitere Artikel erscheinen hier -->
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td colspan="2" id="subtotal">Gesamtpreis (ohne MwSt.):</td>
-                        <td colspan="3" id="subtotal">€1500.00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" id="tax">MwSt. (19%):</td>
-                        <td colspan="3" id="tax">€0.00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" id="cart-total">Gesamtpreis (inkl. MwSt.):</td>
-                        <td colspan="3" id="cart-total">€0.00</td>
-                    </tr>
-                    </tfoot>
+                    <!-- Artikel erscheinen hier -->
                 </table>
-                
             </div>
-                <!-- Hier werden die ausgewählten Artikel angezeigt -->
-            </ul>
-           
+            <button type="button" id="emptyShoppingBasketButton">Warenkorb leeren</button>
         </div>
             <!-- Bestellformular -->
         <div class="leftSide">
@@ -172,5 +142,17 @@
         <a href="datenschutz.html">Datenschutz</a> | 
         <a href="impressum.html">Impressum</a>
     </footer>
+
+    <script>
+        $(document).ready(function() {
+            console.log('output basket');
+            renderBasket('#basket > tbody');
+
+            $('#emptyShoppingBasketButton').click(function() {
+                emptyBasket();
+            });
+        });
+    </script>
+
 </body>
 </html>
