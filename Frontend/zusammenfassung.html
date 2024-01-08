@@ -177,46 +177,30 @@
     </footer>
 
 <script>
-    document.getElementById('order-form').addEventListener('submit', function(event) {
-    // Eventlistener hinzufügen der auf den Button "Bestellung Abschließen reagiert"
-
+document.getElementById('order-form').addEventListener('submit', function(event) {
     event.preventDefault();
-    // Eventlistener hinzufügen der auf den Button "Bestellung Abschließen reagiert"
 
     let formData = new FormData(event.target);
-    // Daten des Formulars werden hier gespeichert
-    // in FormData Objekt gespeichert
-
     let orderData = {
         customerInfo: Object.fromEntries(formData.entries()),
     };
-    // Umformen der Formulardaten in ein Objekt
-    // FormData einträge werden zu einen JS Objekt namens orderData
 
-    fetch('http://localhost:8000/api/bestellung', {
+    $.ajax({
+        url: 'http://localhost:8000/api/bestellung',
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
+        contentType: 'application/json',
+        data: JSON.stringify(orderData),
+        success: function(data) {
+            console.log(data);
+            alert('Bestellung erfolgreich aufgegeben');
         },
-        body: JSON.stringify(orderData),
-    })
-    // Die fetch-Anweisung sendet eine POST-Anfrage an den Server unter der angegebenen URL (http://localhost:8000/api/bestellung)
-    // Die Daten in orderData werden zu einem JSON-String konvertiert und im Body der Anfrage übermittelt.
-
-    .then(response => response.json())
-    .then(data => {
-        // Behandlung der Antwort vom Server
-        console.log(data);
-        alert('Bestellung erfolgreich aufgegeben');
-    })
-    // Diese Zeilen verarbeiten die Antwort vom Server. Zuerst wird die Antwort in JSON umgewandelt, und dann wird der umgewandelte Inhalt (in data) verwendet.
-    // Es wird eine Meldung in der Konsole ausgegeben und dem Benutzer ein Alert angezeigt, dass die Bestellung erfolgreich war.
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Ein Fehler ist aufgetreten');
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Error:', textStatus, errorThrown);
+            alert('Ein Fehler ist aufgetreten');
+        }
     });
-    // Diese Zeile fängt Fehler, die während der fetch-Anfrage auftreten können. Bei einem Fehler wird eine Fehlermeldung in der Konsole ausgegeben
 });
+
 
 </script>
 
