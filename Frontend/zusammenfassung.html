@@ -181,12 +181,12 @@
     event.preventDefault();
 
     let formData = new FormData(event.target);
-    let basket = getJSONSessionItem('shoppingBasket'); // Funktion, um den Warenkorb aus dem lokalen Speicher zu holen
+    //let basket = getJSONSessionItem('shoppingBasket'); // Funktion, um den Warenkorb aus dem lokalen Speicher zu holen
 
-    let orderData = {
-        customerInfo: Object.fromEntries(formData.entries()),
-        basket: basket
-    };
+    //let orderData = {
+    //    customerInfo: Object.fromEntries(formData.entries()),
+    //    basket: basket
+    //};
 
     fetch('http://localhost:8000/api/bestellung', {
         method: 'POST',
