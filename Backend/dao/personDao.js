@@ -70,10 +70,10 @@ class PersonDao {
         return false;
     }
 
-    create(anrede = 'Herr', vorname = '', nachname = '', adresseId = 1, telefonnummer = '', email = '', geburtstag = null) {
-        var sql = 'INSERT INTO Person (anrede,vorname,nachname,adresseId,telefonnummer,email,geburtstag) VALUES (?,?,?,?,?,?,?)';
+    create(anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = 1, plz = '', ort = '', land = '') {
+        var sql = 'INSERT INTO Person (anrede,vorname,nachname,firma,ustid,email,strassenr, plz, ort, land) VALUES (?,?,?,?,?,?,?,?,?,?)';
         var statement = this._conn.prepare(sql);
-        var params = [(helper.strStartsWith(anrede, 'He') ? 0 : 1), vorname, nachname, adresseId, telefonnummer, email, (helper.isNull(geburtstag) ? null : helper.formatToSQLDate(geburtstag))];
+        var params = [anrede, vorname, nachname, firma, ustid, email, strassenr, plz, ort, land, email];
         var result = statement.run(params);
 
         if (result.changes != 1) 
@@ -82,10 +82,10 @@ class PersonDao {
         return this.loadById(result.lastInsertRowid);
     }
 
-    update(id, anrede = 'Herr', vorname = '', nachname = '', adresseId = 1, telefonnummer = '', email = '', geburtstag = null) {
-        var sql = 'UPDATE Person SET anrede=?,vorname=?,nachname=?,adresseId=?,telefonnummer=?,email=?,geburtstag=? WHERE id=?';
+    update(id, anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = 1, plz = '', ort = '', land = '') {
+        var sql = 'UPDATE Person SET anrede=?,vorname=?,nachname=?,firma=?,ustid=?,email=?,strassenr=?,plz=?,ort=?,land=? WHERE id=?';
         var statement = this._conn.prepare(sql);
-        var params = [(helper.strStartsWith(anrede, 'He') ? 0 : 1), vorname, nachname, adresseId, telefonnummer, email, (helper.isNull(geburtstag) ? null : helper.formatToSQLDate(geburtstag)), id];
+        var params = [anrede, vorname, nachname, firma, ustid, email, strassenr, plz, ort, land, email];
         var result = statement.run(params);
 
         if (result.changes != 1) 
