@@ -70,7 +70,7 @@ class PersonDao {
         return false;
     }
 
-    create(anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = 1, plz = '', ort = '', land = '') {
+    create(anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = '', plz = '', ort = '', land = '') {
         var sql = 'INSERT INTO Person (anrede,vorname,nachname,firma,ustid,email,strassenr, plz, ort, land) VALUES (?,?,?,?,?,?,?,?,?,?)';
         var statement = this._conn.prepare(sql);
         var params = [anrede, vorname, nachname, firma, ustid, email, strassenr, plz, ort, land, email];
@@ -82,7 +82,7 @@ class PersonDao {
         return this.loadById(result.lastInsertRowid);
     }
 
-    update(id, anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = 1, plz = '', ort = '', land = '') {
+    update(id, anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = '', plz = '', ort = '', land = '') {
         var sql = 'UPDATE Person SET anrede=?,vorname=?,nachname=?,firma=?,ustid=?,email=?,strassenr=?,plz=?,ort=?,land=? WHERE id=?';
         var statement = this._conn.prepare(sql);
         var params = [anrede, vorname, nachname, firma, ustid, email, strassenr, plz, ort, land, email];
