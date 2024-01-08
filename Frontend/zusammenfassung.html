@@ -182,13 +182,6 @@
 
     let formData = new FormData(event.target);
 
-    let zahlungsart = "Kreditkarte"; // oder einen tatsächlichen Wert aus dem Formular
-    let bestellpositionen = [
-        // Beispiel für Bestellpositionen - diese sollten aus Ihrem Warenkorb oder Formular stammen
-        { produktId: 123, menge: 2 },
-        { produktId: 456, menge: 1 }
-    ];
-
     let orderData = {
         customerInfo: Object.fromEntries(formData.entries()),
     };
