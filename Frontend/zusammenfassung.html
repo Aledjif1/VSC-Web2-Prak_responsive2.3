@@ -176,6 +176,39 @@
         <a href="impressum.html">Impressum</a>
     </footer>
 
-    
+<script>
+    document.getElementById('order-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    let formData = new FormData(event.target);
+    let basket = getJSONSessionItem('shoppingBasket'); // Funktion, um den Warenkorb aus dem lokalen Speicher zu holen
+
+    let orderData = {
+        customerInfo: Object.fromEntries(formData.entries()),
+        basket: basket
+    };
+
+    fetch('http://localhost:8000/api/bestellung', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Behandlung der Antwort vom Server
+        console.log(data);
+        alert('Bestellung erfolgreich aufgegeben');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ein Fehler ist aufgetreten');
+    });
+});
+
+</script>
+
+
 </body>
 </html>
