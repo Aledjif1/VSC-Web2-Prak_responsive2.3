@@ -51,6 +51,8 @@ serviceRouter.post('/person', function(request, response) {
     console.log('Service Person: Client requested creation of new record');
 
     var errorMsgs=[];
+    if (helper.isUndefined(request.body.id)) 
+        errorMsgs.push('id missing');
     if (helper.isUndefined(request.body.anrede)) {
         errorMsgs.push('anrede fehlt');
     } else if (request.body.anrede.toLowerCase() !== 'herr' && request.body.anrede.toLowerCase() !== 'frau') {
@@ -60,24 +62,22 @@ serviceRouter.post('/person', function(request, response) {
         errorMsgs.push('vorname fehlt');
     if (helper.isUndefined(request.body.nachname)) 
         errorMsgs.push('nachname fehlt');
-    if (helper.isUndefined(request.body.adresse)) {
-        errorMsgs.push('adresse fehlt');
-    } else if (helper.isUndefined(request.body.adresse.id)) {
-        errorMsgs.push('adresse gesetzt, aber id fehlt');
-    }
-    if (helper.isUndefined(request.body.telefonnummer)) 
-        request.body.telefonnummer = '';
+    if (helper.isUndefined(request.body.firma)) 
+        request.body.firma = '';
+    if (helper.isUndefined(request.body.ustid)) 
+        request.body.ustid = '';
     if (helper.isUndefined(request.body.email)) 
         errorMsgs.push('email fehlt');
     if (!helper.isEmail(request.body.email)) 
         errorMsgs.push('email hat ein falsches Format');
-    if (helper.isUndefined(request.body.geburtstag)) {
-        request.body.geburtstag = null;
-    } else if (!helper.isGermanDateTimeFormat(request.body.geburtstag)) {
-        errorMsgs.push('geburtstag hat das falsche Format, erlaubt: dd.mm.jjjj');
-    } else {
-        request.body.geburtstag = helper.parseDateTimeString(request.body.geburtstag);
-    }
+    if (helper.isUndefined(request.body.strassenr)) 
+        errorMsgs.push('Straße fehlt');
+    if (helper.isUndefined(request.body.plz)) 
+        errorMsgs.push('plz fehlt');
+    if (helper.isUndefined(request.body.ort)) 
+        errorMsgs.push('ort fehlt');
+    if (helper.isUndefined(request.body.land)) 
+        errorMsgs.push('land fehlt');
     
     if (errorMsgs.length > 0) {
         console.log('Service Person: Creation not possible, data missing');

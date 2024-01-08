@@ -172,5 +172,27 @@
         <a href="datenschutz.html">Datenschutz</a> | 
         <a href="impressum.html">Impressum</a>
     </footer>
+
+    <script>
+    document.getElementById('order-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    let formData = new FormData(event.target);
+    let jsonData = Object.fromEntries(formData.entries());
+
+    fetch('/person', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonData),
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+});
+
+    </script>
+
 </body>
 </html>
