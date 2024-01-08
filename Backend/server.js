@@ -94,9 +94,11 @@ try {
     
     serviceRouter = require('./services/produktkategorie.js');
     app.use(TOPLEVELPATH, serviceRouter);
-
+    
+    /*
     serviceRouter = require('./services/zahlungsart.js');
     app.use(TOPLEVELPATH, serviceRouter);
+    */
 
     serviceRouter = require('./services/mehrwertsteuer.js');
     app.use(TOPLEVELPATH, serviceRouter);
