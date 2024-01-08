@@ -64,6 +64,48 @@
     </div>
 
     </main>
+    <script>
+        function updateTotal(button) {
+            var row = button.closest('tr');
+            var quantityInput = row.querySelector('.quantity-input');
+            var unitPrice = parseFloat(row.cells[2].textContent.replace('€', ''));
+            var newQuantity = parseInt(quantityInput.value);
+            var totalPriceCell = row.cells[4];
+    
+            // Update Gesamtpreis in der Tabelle
+            var newTotalPrice = unitPrice * newQuantity;
+            totalPriceCell.textContent = newTotalPrice.toFixed(2) + '€';
+    
+            // Rufe die Funktion zur Aktualisierung des Gesamtpreises auf
+            updateCartTotal();
+        }
+    
+        function removeProduct(button) {
+            var row = button.closest('tr');
+            row.remove();
+            updateCartTotal();
+        }
+    
+        function updateCartTotal() {
+            var cartItems = document.querySelectorAll('#cart-items-table tr');
+            var subtotal = 0;
+    
+            // Berechne den Gesamtpreis 
+            cartItems.forEach(function (item) {
+                var totalPriceCell = item.cells[4];
+                var totalPrice = parseFloat(totalPriceCell.textContent.replace('€', ''));
+                subtotal += totalPrice;
+            });
+    
+            var tax = 0.19 * subtotal; // 19% Mehrwertsteuer
+            var cartTotal = subtotal + tax;
+    
+            // Aktualisiere die Werte in der Tabelle
+            document.getElementById('subtotal').textContent = '€' + subtotal.toFixed(2);
+            document.getElementById('tax').textContent = '€' + tax.toFixed(2);
+            document.getElementById('cart-total').textContent = '€' + cartTotal.toFixed(2);
+        }
+    </script>
 
     <!-- Footer-Bereich -->
     <footer class="footer">
