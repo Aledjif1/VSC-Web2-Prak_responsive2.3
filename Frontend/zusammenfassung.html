@@ -147,29 +147,6 @@
     </footer>
 
 <script>
-document.getElementById('order-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    let formData = new FormData(event.target);
-    let orderData = {
-        customerInfo: Object.fromEntries(formData.entries()),
-    };
-
-    $.ajax({
-        url: 'http://localhost:8000/api/bestellung',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(orderData),
-        success: function(data) {
-            console.log(data);
-            alert('Bestellung erfolgreich aufgegeben');
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('Error:', textStatus, errorThrown);
-            alert('Ein Fehler ist aufgetreten');
-        }
-    });
-});
 
 
 </script>
