@@ -20,10 +20,10 @@
         <h1> Willkommen bei IAppleSales! </h1>
         <nav>
             <ul class="navigation">
-                <li><a href="kategorieseite_IPhones.html">iPhones</a></li>
-                <li><a href="kategorieseite_IPads.html">iPads</a></li>
-                <li><a href="kategorieseite_IMacs.html">iMacs</a></li>
-                <li><a href="kategorieseite_Zubehoer.html">Zubehör</a></li>
+                <li><a href="default_kategorieseite.html?id=1">iPhones</a></li>  
+                <li><a href="default_kategorieseite.html?id=2">iPads</a></li>      
+                <li><a href="default_kategorieseite.html?id=3">iMacs</a></li>      
+                <li><a href="default_kategorieseite.html?id=4">Zubehör</a></li>
             </ul>
         </nav>
         </div>
@@ -60,38 +60,80 @@
                     <input type="number" id="quantity" value="1" min="0" max="99">
                     <button class="apply-button" onclick="updateTotal()">Übernehmen</button>
                 </td>
-                <td id="total-price">€1500.00</td>
+                <td id="total-price">1500.00€</td>
             </tr>
             <tr>
                 <td id="article-number">3214</td>
                 <td id="article-name">Air Pods</td>
-                <td id="unit-price">€1500.00</td>
+                <td id="unit-price">1500.00€</td>
                 <td>                    
                     <input type="number" id="quantity" value="1" min="0" max="99">
                     <button class="apply-button" onclick="updateTotal()">Übernehmen</button>
                 </td>
-                <td id="total-price">€1500.00</td>
+                <td id="total-price">1500.00€</td>
             </tr>
             <!-- Weitere Artikel erscheinen hier -->
             </tbody>
             <tfoot>
             <tr>
                 <td colspan="2" id="subtotal">Gesamtpreis (ohne MwSt.):</td>
-                <td colspan="3" id="subtotal">€1500.00</td>
+                <td colspan="3" id="subtotal">1500.00€</td>
             </tr>
             <tr>
                 <td colspan="2" id="tax">MwSt. (19%):</td>
-                <td colspan="3" id="tax">€0.00</td>
+                <td colspan="3" id="tax">0.00€</td>
             </tr>
             <tr>
                 <td colspan="2" id="cart-total">Gesamtpreis (inkl. MwSt.):</td>
-                <td colspan="3" id="cart-total">€0.00</td>
+                <td colspan="3" id="cart-total">0.00€</td>
             </tr>
             </tfoot>
         </table>
         <button class="order-button" id="checkout-button">Bestellung abschließen</button>
     </div>
     </main>
+    <script>
+        function updateTotal(button) {
+            var row = button.closest('tr');
+            var quantityInput = row.querySelector('.quantity-input');
+            var unitPrice = parseFloat(row.cells[2].textContent.replace('€', ''));
+            var newQuantity = parseInt(quantityInput.value);
+            var totalPriceCell = row.cells[4];
+    
+            // Update Gesamtpreis in der Tabelle
+            var newTotalPrice = unitPrice * newQuantity;
+            totalPriceCell.textContent = newTotalPrice.toFixed(2) + '€';
+    
+            // Rufe die Funktion zur Aktualisierung des Gesamtpreises auf
+            updateCartTotal();
+        }
+    
+        function removeProduct(button) {
+            var row = button.closest('tr');
+            row.remove();
+            updateCartTotal();
+        }
+    
+        function updateCartTotal() {
+            var cartItems = document.querySelectorAll('#cart-items-table tr');
+            var subtotal = 0;
+    
+            // Berechne den Gesamtpreis 
+            cartItems.forEach(function (item) {
+                var totalPriceCell = item.cells[4];
+                var totalPrice = parseFloat(totalPriceCell.textContent.replace('€', ''));
+                subtotal += totalPrice;
+            });
+    
+            var tax = 0.19 * subtotal; // 19% Mehrwertsteuer
+            var cartTotal = subtotal + tax;
+    
+            // Aktualisiere die Werte in der Tabelle
+            document.getElementById('subtotal').textContent = '€' + subtotal.toFixed(2);
+            document.getElementById('tax').textContent = '€' + tax.toFixed(2);
+            document.getElementById('cart-total').textContent = '€' + cartTotal.toFixed(2);
+        }
+    </script>
 
     <!-- Footer-Bereich -->
     <footer class="footer">

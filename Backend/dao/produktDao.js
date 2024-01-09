@@ -83,15 +83,16 @@ class ProduktDao {
         return result;
     }
 
-    loadAllByKeyword(keyword) {
+    loadAllByKeyword(id) {
         const produktkategorieDao = new ProduktkategorieDao(this._conn);
         const mehrwertsteuerDao = new MehrwertsteuerDao(this._conn);
-        const produktbildDao = new ProduktbildDao(this._conn);
         const downloadDao = new DownloadDao(this._conn);
+        const produktbildDao = new ProduktbildDao(this._conn);
 
-        var sql = "SELECT * FROM Produkt WHERE UPPER(bezeichnung) LIKE UPPER('%" + keyword + "%')";
+        var sql = "SELECT * FROM Produkt WHERE UPPER(bezeichnung) LIKE UPPER('%?%')";
+        
         var statement = this._conn.prepare(sql);
-        var result = statement.all(keyword);
+        var result = statement.all(id);
 
         if (helper.isArrayEmpty(result)) 
             return [];
@@ -128,26 +129,31 @@ class ProduktDao {
 
         var sql = 'SELECT * FROM Produkt WHERE kategorieId =?';
         var statement = this._conn.prepare(sql);
-        var result = statement.get(id);
+        var result = statement.all(id);
 
-        if (helper.isUndefined(result)) 
-            throw new Error('No Record found by categoryid=' + id);
+        if (helper.isArrayEmpty(result)) 
+            return [];
 
-        result.kategorie = produktkategorieDao.loadById(result.kategorieId);
-        delete result.kategorieId;
-        result.mehrwertsteuer = mehrwertsteuerDao.loadById(result.mehrwertsteuerId);
-        delete result.mehrwertsteuerId;
-        if (helper.isNull(result.datenblattId)) {
-            result.datenblatt = null;
-        } else {
-            result.datenblatt = downloadDao.loadById(result.datenblattId);
+        for (var i = 0; i < result.length; i++) {
+            result[i].kategorie = produktkategorieDao.loadById(result[i].kategorieId);
+            delete result[i].kategorieid;
+
+            result[i].mehrwertsteuer = mehrwertsteuerDao.loadById(result[i].mehrwertsteuerId);
+            delete result[i].mehrwertsteuerid;
+
+            if (helper.isNull(result[i].datenblattId)) {
+                result[i].datenblatt = null;
+            } else {
+                result[i].datenblatt = downloadDao.loadById(result[i].datenblattId);
+            }
+            delete result[i].datenblattId;
+
+            result[i].bilder = produktbildDao.loadByParent(result[i].id);
+
+            result[i].mehrwertsteueranteil = helper.round((result[i].nettopreis / 100) * result[i].mehrwertsteuer.steuerSatz);
+
+            result[i].bruttopreis = helper.round(result[i].nettopreis + result[i].mehrwertsteueranteil);
         }
-        delete result.datenblattId;
-        result.bilder = produktbildDao.loadByParent(result.id);
-
-        result.mehrwertsteueranteil = helper.round((result.nettopreis / 100) * result.mehrwertsteuer.steuerSatz);
-
-        result.bruttopreis = helper.round(result.nettopreis + result.mehrwertsteueranteil);
 
         return result;
     }

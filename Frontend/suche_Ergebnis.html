@@ -3,7 +3,7 @@
 <head>
     <title>iSales | Suchergebnis</title>
     <link rel="stylesheet" type="text/css" href="./style/styles.css">
-    <script src="./script/script.js"></script>
+    <script src="script/script.js"></script>
 </head>
 <body>
     <!-- Header-Bereich -->
@@ -20,10 +20,10 @@
         <h1>Willkommen bei IAppleSales!</h1>
         <nav>
             <ul class="navigation">
-                <li><a href="kategorieseite_IPhones.html">iPhones</a></li>
-                <li><a href="kategorieseite_IPads.html">iPads</a></li>
-                <li><a href="kategorieseite_IMacs.html">iMacs</a></li>
-                <li><a href="kategorieseite_Zubehoer.html">Zubehör</a></li>
+                <li><a href="default_kategorieseite.html?id=1">iPhones</a></li>  
+                <li><a href="default_kategorieseite.html?id=2">iPads</a></li>      
+                <li><a href="default_kategorieseite.html?id=3">iMacs</a></li>      
+                <li><a href="default_kategorieseite.html?id=4">Zubehör</a></li>
             </ul>
         </nav>
         </div>
@@ -103,6 +103,67 @@
         <a href="datenschutz.html">Datenschutz</a> | 
         <a href="impressum.html">Impressum</a>
     </footer>
+    <script>
+        $(document).ready(function() {
+			
+            // get id from url parameter
+            var id = -1;
+
+            if (existsUrlParameter('id')) 
+                id = getUrlParameterValue('id');
+
+            console.log('target keyword id=' + id);
+
+            if (id == -1) {
+                alert('keine id erhalten');
+                return;
+            }  
+
+			$.ajax({
+                url: 'http://localhost:8000/api/produkt/gib/suchanfrage/' + id,
+                method: 'get',
+                contentType: 'application/json; charset=utf-8',
+                cache: false,
+				dataType: 'json'
+            }).done(function (response) {
+                console.log(response);
+                renderProducts(response);
+
+                function renderProducts(produkte) {
+                    var produktListeElement = $('#productList');
+
+                    // Itteration durch die Produkte
+                    for (var i = 0; i < produkte.length; i++) {
+                        var produkt = response[i];
+                        var produktHTML = '<div class="product">';
+                        produktHTML += '<div class="product-picture">';
+                        var pic = produkt.bilder[0];
+                        var bildpfad = 'http://localhost:8000/' + pic.bildpfad; 
+                        produktHTML += '<a href="default_produktdetail.html?id=' + produkt.id +'">';
+                        produktHTML += '<img src="' + bildpfad + '" class="product-image">';
+                        produktHTML += '</a>';
+                        produktHTML += '</div>';
+                        produktHTML += '<div class="product-title">';
+                        produktHTML += '<h2>' + produkt.bezeichnung + '</h2>';
+                        produktHTML += '</div>';
+                        produktHTML += '<div class="product-text">';
+                        produktHTML += '<h2>Preis: ' + produkt.bruttopreis + '€ <br>inkl. MwSt</h2> <h4>versandkostenfrei</h4> <br>'; 
+                        produktHTML += produkt.kurzbeschreibung;
+                        produktHTML += '<br>';
+                        produktHTML += '<button class="product-detail-button" onclick="jumpToDetails('+ produkt.id + ')">Details</button>';
+                        produktHTML += '<button class="add-to-cart-button" onclick="addToBasket('+ produkt.id + ')">Zum Warenkorb hinzufügen</button>';
+                        // Abschluss des Renderns
+                        produktHTML += '</div>';
+                        produktListeElement.append(produktHTML);
+                    };
+                }
+
+            }).fail(function (jqXHR, statusText, error) {
+                console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
+                alert('Ein Fehler ist aufgetreten');
+            });
+        });
+    </script>
 </body>
 </html>
 

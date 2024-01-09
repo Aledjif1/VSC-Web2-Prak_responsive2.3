@@ -2,13 +2,20 @@
 <html>
 <head>
     <title>iSales | AirPods - Details</title>
-    <link rel="stylesheet" type="text/css" href="./././style/styles.css">
-    <script src="./script/script.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="./script//sessionHandling.js"></script>
-    <script src="./script//shopAndBasket.js"></script>
-    <script src="./script//urlParameter.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/styles.css">
+    <script src="script/script.js"></script>
+    <script src="https:/ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="script/sessionHandling.js"></script>
+    <script src="script/shopAndBasket.js"></script>
+    <script src="script/urlParameter.js"></script>
 </head>
+
+<script>
+    // get id from url parameter
+    var productId = -1;
+
+</script>
+
 <body>
     <!-- Header-Bereich -->
     <header class="header">
@@ -24,10 +31,10 @@
             <h1>Willkommen bei iAppleSales!</h1>
             <nav>
                 <ul class="navigation">
-                    <li><a href="kategorieseite_IPhones.html">iPhones</a></li>
-					<li><a href="kategorieseite_IPads.html">iPads</a></li>
-					<li><a href="kategorieseite_IMacs.html">iMacs</a></li>
-					<li><a href="kategorieseite_Zubehoer.html">Zubehör</a></li>
+                    <li><a href="default_kategorieseite.html?id=1">iPhones</a></li>  
+                    <li><a href="default_kategorieseite.html?id=2">iPads</a></li>      
+                    <li><a href="default_kategorieseite.html?id=3">iMacs</a></li>      
+                    <li><a href="default_kategorieseite.html?id=4">Zubehör</a></li>
                 </ul>
             </nav>
         </div>
@@ -65,8 +72,8 @@
                 <h4>enthaltene MwSt:</h4><p id="productTax"></p>
                 <p>Lieferzeit: 1-3 Werktage</p>
                 <h4>Versandkostenfrei</h4>
-                <button class="add-to-cart-button" onclick="addToBasket(productId)">In den Warenkorb</button>
-                <a class="back-to-page-button" href="kategorieseite_Zubehoer.html">zurück zur Übersicht</a>
+                <button class="add-to-cart-button" onclick="addCurrentProductToBasket()">In den Warenkorb</button>
+                <a class="back-to-page-button" href="index.html">zurück zur Übersicht</a>
             </div>
         </div>
         <!-- Detaillierte Informationen unterhalb -->
@@ -87,13 +94,13 @@
         $(document).ready(function() {
             console.log('loading specific product');
 
-            // get id from url parameter
             var id = -1;
 
             if (existsUrlParameter('id')) 
                 id = getUrlParameterValue('id');
 
             console.log('target product id=' + id);
+            productId = id;
 
             if (id == -1) {
                 alert('keine id erhalten');
@@ -136,6 +143,11 @@
             });
         });
 
+
+        function addCurrentProductToBasket() {
+            console.log('adding id:', productId);
+            addToBasket(productId);
+        }
         
     </script>
 </body>

@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>iAppleSales | Warenkorb</title>
-    <link rel="stylesheet" type="text/css" href="./style/styles.css">
-    <script src="./script/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/styles.css">
+    <script src="script/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="./script//sessionHandling.js"></script>
-    <script src="./script//shopAndBasket.js"></script>
+    <script src="script//sessionHandling.js"></script>
+    <script src="script//shopAndBasket.js"></script>
 </head>
 <body class="body">
     <!-- Header-Bereich -->
@@ -23,10 +23,10 @@
         <h1> Willkommen bei IAppleSales! </h1>
         <nav>
             <ul class="navigation">
-                <li><a href="kategorieseite_IPhones.html">iPhones</a></li>
-                <li><a href="kategorieseite_IPads.html">iPads</a></li>
-                <li><a href="kategorieseite_IMacs.html">iMacs</a></li>
-                <li><a href="kategorieseite_Zubehoer.html">Zubehör</a></li>
+                <li><a href="default_kategorieseite.html?id=1">iPhones</a></li>  
+                <li><a href="default_kategorieseite.html?id=2">iPads</a></li>      
+                <li><a href="default_kategorieseite.html?id=3">iMacs</a></li>      
+                <li><a href="default_kategorieseite.html?id=4">Zubehör</a></li>
             </ul>
         </nav>
         </div>
@@ -64,6 +64,48 @@
     </div>
 
     </main>
+    <script>
+        function updateTotal(button) {
+            var row = button.closest('tr');
+            var quantityInput = row.querySelector('.quantity-input');
+            var unitPrice = parseFloat(row.cells[2].textContent.replace('€', ''));
+            var newQuantity = parseInt(quantityInput.value);
+            var totalPriceCell = row.cells[4];
+    
+            // Update Gesamtpreis in der Tabelle
+            var newTotalPrice = unitPrice * newQuantity;
+            totalPriceCell.textContent = newTotalPrice.toFixed(2) + '€';
+    
+            // Rufe die Funktion zur Aktualisierung des Gesamtpreises auf
+            updateCartTotal();
+        }
+    
+        function removeProduct(button) {
+            var row = button.closest('tr');
+            row.remove();
+            updateCartTotal();
+        }
+    
+        function updateCartTotal() {
+            var cartItems = document.querySelectorAll('#cart-items-table tr');
+            var subtotal = 0;
+    
+            // Berechne den Gesamtpreis 
+            cartItems.forEach(function (item) {
+                var totalPriceCell = item.cells[4];
+                var totalPrice = parseFloat(totalPriceCell.textContent.replace('€', ''));
+                subtotal += totalPrice;
+            });
+    
+            var tax = 0.19 * subtotal; // 19% Mehrwertsteuer
+            var cartTotal = subtotal + tax;
+    
+            // Aktualisiere die Werte in der Tabelle
+            document.getElementById('subtotal').textContent = '€' + subtotal.toFixed(2);
+            document.getElementById('tax').textContent = '€' + tax.toFixed(2);
+            document.getElementById('cart-total').textContent = '€' + cartTotal.toFixed(2);
+        }
+    </script>
 
     <!-- Footer-Bereich -->
     <footer class="footer">
