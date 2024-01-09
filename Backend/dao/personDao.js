@@ -26,8 +26,6 @@ class PersonDao {
         else 
             result.anrede = 'Frau';
 
-        result.geburtstag = helper.formatToGermanDate(helper.parseSQLDateTimeString(result.geburtstag));
-
         result.adresse = adresseDao.loadById(result.adresseId);
         delete result.adresseId;
 
@@ -49,8 +47,6 @@ class PersonDao {
                 result[i].anrede = 'Herr';
             else 
                 result[i].anrede = 'Frau';
-
-            result[i].geburtstag = helper.formatToGermanDate(helper.parseSQLDateTimeString(result[i].geburtstag));
             
             result[i].adresse = adresseDao.loadById(result[i].adresseId);
             delete result[i].adresseId;
