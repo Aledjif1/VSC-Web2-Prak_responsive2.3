@@ -101,9 +101,9 @@
             var cartTotal = subtotal + tax;
     
             // Aktualisiere die Werte in der Tabelle
-            document.getElementById('subtotal').textContent = '€' + subtotal.toFixed(2);
-            document.getElementById('tax').textContent = '€' + tax.toFixed(2);
-            document.getElementById('cart-total').textContent = '€' + cartTotal.toFixed(2);
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2) + '€';
+            document.getElementById('tax').textContent = tax.toFixed(2) + '€';
+            document.getElementById('cart-total').textContent = cartTotal.toFixed(2) + '€';
         }
     </script>
 
