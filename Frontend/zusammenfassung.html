@@ -147,7 +147,13 @@
     </footer>
 
 <script>
-
+            $.ajax({
+                url: 'http://localhost:8000/api/person/',
+                method: 'post',
+                contentType: 'application/json; charset=utf-8',
+                cache: false,
+				dataType: 'json'
+            })
 
 </script>
 
