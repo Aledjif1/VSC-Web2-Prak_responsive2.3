@@ -7,6 +7,8 @@
     <script src="./script/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="./script//urlParameter.js"></script>
+    <script src="script//sessionHandling.js"></script>
+    <script src="script//shopAndBasket.js"></script>
 
 </head>
 <body>
@@ -147,6 +149,11 @@
     </footer>
 
 <script>
+
+$(document).ready(function() {
+            // Laden und Anzeigen des Warenkorbs
+            renderBasket('#basket > tbody');
+        });
 
 $('#order-form').submit(function(e) {
     e.preventDefault(); // Verhindert das Neuladen der Seite nach dem Absenden des Formulars
