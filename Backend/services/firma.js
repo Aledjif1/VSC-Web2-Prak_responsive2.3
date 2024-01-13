@@ -50,29 +50,26 @@ serviceRouter.get('/firma/existiert/:id', function(request, response) {
 serviceRouter.post('/firma', function(request, response) {
     console.log('Service Firma: Client requested creation of new record');
 
-    var errorMsgs=[];
-    if (helper.isUndefined(request.body.name)) 
-        errorMsgs.push('name fehlt');
-    if (helper.isUndefined(request.body.inhaber)) 
-        request.body.inhaber = null;
-    if (helper.isUndefined(request.body.ustid)) 
-        errorMsgs.push('Ust-Id fehlt');
+    var errorMsgs = [];
     if (helper.isUndefined(request.body.adresse)) {
         errorMsgs.push('adresse fehlt');
     } else if (helper.isUndefined(request.body.adresse.id)) {
         errorMsgs.push('adresse gesetzt, aber id fehlt');
     }
 
-    
     if (errorMsgs.length > 0) {
         console.log('Service Firma: Creation not possible, data missing');
         response.status(400).json({ 'fehler': true, 'nachricht': 'Funktion nicht möglich. Fehlende Daten: ' + helper.concatArray(errorMsgs) });
         return;
     }
 
+    // Setze 'name' und 'ustid' auf null, falls sie nicht definiert sind
+    const name = helper.isUndefined(request.body.name) ? null : request.body.name;
+    const ustid = helper.isUndefined(request.body.ustid) ? null : request.body.ustid;
+
     const firmaDao = new FirmaDao(request.app.locals.dbConnection);
     try {
-        var obj = firmaDao.create(request.body.name, request.body.inhaber, request.body.ustid, request.body.adresse.id);
+        var obj = firmaDao.create(name, request.body.inhaber, ustid, request.body.adresse.id);
         console.log('Service Firma: Record inserted');
         response.status(200).json(obj);
     } catch (ex) {
@@ -81,18 +78,13 @@ serviceRouter.post('/firma', function(request, response) {
     }    
 });
 
+
 serviceRouter.put('/firma', function(request, response) {
     console.log('Service Firma: Client requested update of existing record');
 
-    var errorMsgs=[];
+    var errorMsgs = [];
     if (helper.isUndefined(request.body.id)) 
         errorMsgs.push('id fehlt');
-    if (helper.isUndefined(request.body.name)) 
-        errorMsgs.push('name fehlt');
-    if (helper.isUndefined(request.body.inhaber)) 
-        request.body.inhaber = null;
-    if (helper.isUndefined(request.body.ustid)) 
-        errorMsgs.push('Ust-Id fehlt');
     if (helper.isUndefined(request.body.adresse)) {
         errorMsgs.push('adresse fehlt');
     } else if (helper.isUndefined(request.body.adresse.id)) {
@@ -105,9 +97,13 @@ serviceRouter.put('/firma', function(request, response) {
         return;
     }
 
+    // Setze 'name' und 'ustid' auf null, falls sie nicht definiert sind
+    const name = helper.isUndefined(request.body.name) ? null : request.body.name;
+    const ustid = helper.isUndefined(request.body.ustid) ? null : request.body.ustid;
+
     const firmaDao = new FirmaDao(request.app.locals.dbConnection);
     try {
-        var obj = firmaDao.update(request.body.id, request.body.name, request.body.inhaber, request.body.ustid, request.body.adresse.id);
+        var obj = firmaDao.update(request.body.id, name, request.body.inhaber, ustid, request.body.adresse.id);
         console.log('Service Firma: Record updated, id=' + request.body.id);
         response.status(200).json(obj);
     } catch (ex) {
@@ -115,6 +111,7 @@ serviceRouter.put('/firma', function(request, response) {
         response.status(400).json({ 'fehler': true, 'nachricht': ex.message });
     }    
 });
+
 
 serviceRouter.delete('/firma/:id', function(request, response) {
     console.log('Service Firma: Client requested deletion of record, id=' + request.params.id);
