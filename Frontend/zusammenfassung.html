@@ -193,9 +193,6 @@ $('#order-form').submit(function(e) {
 });
 
 
-
-
-
 // ODER DAS HIER
 
 $('#order-form').submit(function(e) {
@@ -244,6 +241,27 @@ $('#order-form').submit(function(e) {
     });
 });
 
+
+
+// VON KUTI 
+
+$('#addtax').click(function() {
+            console.log('button addtax clicked');
+			
+			$.ajax({
+                url: 'http://localhost:8000/api/mehrwertsteuer',
+                method: 'post',
+				contentType: 'application/json; charset=utf-8',
+                cache: false,
+				data: JSON.stringify(obj)
+            }).done(function (response) {
+                console.log(response);
+                $('#output').html(JSON.stringify(response));
+            }).fail(function (jqXHR, statusText, error) {
+                console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
+                $('#output').html('Ein Fehler ist aufgetreten');
+            });
+        });
 
 
 </script>
