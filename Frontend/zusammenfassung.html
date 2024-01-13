@@ -151,7 +151,7 @@
 $('#order-form').submit(function(e) {
     e.preventDefault(); // Verhindert das Neuladen der Seite nach dem Absenden des Formulars
 
-    // Erstelle zunächst die Adresse
+    // Erstelle Adresse
     $.ajax({
         url: 'http://localhost:8000/api/adresse',
         method: 'POST',
@@ -166,7 +166,7 @@ $('#order-form').submit(function(e) {
         success: function(adresseData) {
             console.log('Adresse Erfolg:', adresseData);
 
-            // Erstelle dann die Person
+            // Erstelle Person
             $.ajax({
                 url: 'http://localhost:8000/person',
                 method: 'POST',
@@ -181,7 +181,7 @@ $('#order-form').submit(function(e) {
                 success: function(personData) {
                     console.log('Person Erfolg:', personData);
 
-                    // Überprüfe, ob Firmendaten vorhanden sind und erstelle gegebenenfalls die Firma
+                    // Überprüfe, ob Firmendaten vorhanden sind und erstelle Firma
                     if ($('#firma').val() || $('#ustid').val()) {
                         $.ajax({
                             url: 'http://localhost:8000/firma',
