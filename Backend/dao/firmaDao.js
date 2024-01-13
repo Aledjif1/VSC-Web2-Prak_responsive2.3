@@ -1,6 +1,5 @@
 const helper = require('../helper.js');
 const AdresseDao = require('./adresseDao.js');
-const BrancheDao = require('./brancheDao.js');
 const PersonDao = require('./personDao.js');
 
 class FirmaDao {
@@ -15,7 +14,6 @@ class FirmaDao {
 
     loadById(id) {
         const adresseDao = new AdresseDao(this._conn);
-        const brancheDao = new BrancheDao(this._conn);
         const personDao = new PersonDao(this._conn);
 
         var sql = 'SELECT * FROM Firma WHERE id=?';
@@ -28,8 +26,6 @@ class FirmaDao {
         result.adresse = adresseDao.loadById(result.adresseId);
         delete result.adresseId;
 
-        result.branche = brancheDao.loadById(result.brancheId);
-        delete result.brancheId;
 
         if (helper.isNull(result.ansprechpartnerId)) {
             result.ansprechpartner = null;
@@ -43,7 +39,6 @@ class FirmaDao {
 
     loadAll() {
         const adresseDao = new AdresseDao(this._conn);
-        const brancheDao = new BrancheDao(this._conn);
         const personDao = new PersonDao(this._conn);
 
         var sql = 'SELECT * FROM Firma';
@@ -57,8 +52,6 @@ class FirmaDao {
             result[i].adresse = adresseDao.loadById(result[i].adresseId);
             delete result[i].adresseId;
 
-            result[i].branche = brancheDao.loadById(result[i].brancheId);
-            delete result[i].brancheId;
 
             if (helper.isNull(result[i].ansprechpartnerId)) {
                 result[i].ansprechpartner = null;
@@ -82,10 +75,10 @@ class FirmaDao {
         return false;
     }
 
-    create(name = '', inhaber = null, ustid = '', adresseId = '') {
-        var sql = 'INSERT INTO Firma (name,inhaber,ustid,adresseId) VALUES (?,?,?,?)';
+    create(name = '', ustid = '', adresseId = '', ansprechpartnerId = '') {
+        var sql = 'INSERT INTO Firma (name,ustid,adresseId,ansprechpartnerId) VALUES (?,?,?,?)';
         var statement = this._conn.prepare(sql);
-        var params = [name, inhaber, ustid, adresseId];
+        var params = [name, ustid, adresseId, ansprechpartnerId];
         var result = statement.run(params);
 
         if (result.changes != 1) 
@@ -94,8 +87,8 @@ class FirmaDao {
         return this.loadById(result.lastInsertRowid);
     }
 
-    update(id, name = '', inhaber = null, ustid = '', adresseId = '') {
-        var sql = 'UPDATE Firma SET name=?,inhaber=?,ustid=?,adresseId=? WHERE id=?';
+    update(id, name = '', ustid = '', adresseId = '', ansprechpartnerId = '') {
+        var sql = 'UPDATE Firma SET name=?,ustid=?,adresseId=?,ansprechpartnerId=? WHERE id=?';
         var statement = this._conn.prepare(sql);
         var params = [name, inhaber, ustid, adresseId, id];
         var result = statement.run(params);
