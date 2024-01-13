@@ -55,8 +55,6 @@ CREATE TABLE Land (
 CREATE TABLE Adresse (
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	strasse TEXT NOT NULL,
-	hausnummer TEXT NOT NULL,
-	adresszusatz TEXT NOT NULL,
 	plz TEXT NOT NULL,
 	ort TEXT NOT NULL,
 	landId INTEGER NOT NULL,
@@ -69,20 +67,15 @@ CREATE TABLE Person (
 	vorname TEXT NOT NULL,
 	nachname TEXT NOT NULL,
 	adresseId INTEGER NOT NULL,
-	telefonnummer TEXT NOT NULL,
 	email TEXT NOT NULL,
-	geburtstag TEXT DEFAULT NULL,
 	CONSTRAINT fk_Person1 FOREIGN KEY (adresseId) REFERENCES Adresse(id)
 );
 
 CREATE TABLE Firma (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    inhaber TEXT DEFAULT NULL,
-    beschreibung TEXT NOT NULL,
     adresseId INTEGER NOT NULL,
     ansprechpartnerId INTEGER DEFAULT NULL,
-    brancheId INTEGER DEFAULT NULL,
     CONSTRAINT fk_Firma1 FOREIGN KEY (adresseId) REFERENCES Adresse(id),
     CONSTRAINT fk_Firma2 FOREIGN KEY (ansprechpartnerId) REFERENCES Person(id)
 );
