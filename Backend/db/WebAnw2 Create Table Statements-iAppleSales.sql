@@ -73,7 +73,8 @@ CREATE TABLE Person (
 
 CREATE TABLE Firma (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
+    name TEXT,
+	ustid TEXT,
     adresseId INTEGER NOT NULL,
     ansprechpartnerId INTEGER DEFAULT NULL,
     CONSTRAINT fk_Firma1 FOREIGN KEY (adresseId) REFERENCES Adresse(id),

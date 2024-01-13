@@ -90,7 +90,7 @@ class FirmaDao {
     update(id, name = '', ustid = '', adresseId = '', ansprechpartnerId = '') {
         var sql = 'UPDATE Firma SET name=?,ustid=?,adresseId=?,ansprechpartnerId=? WHERE id=?';
         var statement = this._conn.prepare(sql);
-        var params = [name, inhaber, ustid, adresseId, id];
+        var params = [name, ustid, adresseId, ansprechpartnerId, id];
         var result = statement.run(params);
 
         if (result.changes != 1) 

@@ -103,7 +103,7 @@
                 </div>
                 <div class="form-group">
                     <label for="strassenr">Straße und Hausnr:</label>
-                    <input type="text" id="strassenr" name="strassenr" placeholder="Straße und Hausnr eingeben..." required>
+                    <input type="text" id="strasse" name="strasse" placeholder="Straße und Hausnr eingeben..." required>
                 </div>
 
                     <div class="form-row">
@@ -151,7 +151,7 @@
 $('#order-form').submit(function(e) {
     e.preventDefault(); // Verhindert das Neuladen der Seite nach dem Absenden des Formulars
 
-    // Erstelle Adresse
+    // Erstelle zunächst die Adresse
     $.ajax({
         url: 'http://localhost:8000/adresse',
         method: 'POST',
@@ -166,7 +166,7 @@ $('#order-form').submit(function(e) {
         success: function(adresseData) {
             console.log('Adresse Erfolg:', adresseData);
 
-            // Erstelle Person
+            // Erstelle dann die Person
             $.ajax({
                 url: 'http://localhost:8000/person',
                 method: 'POST',
@@ -180,6 +180,28 @@ $('#order-form').submit(function(e) {
                 dataType: 'json',
                 success: function(personData) {
                     console.log('Person Erfolg:', personData);
+
+                    // Überprüfe, ob Firmendaten vorhanden sind und erstelle gegebenenfalls die Firma
+                    if ($('#firma').val() || $('#ustid').val()) {
+                        $.ajax({
+                            url: 'http://localhost:8000/firma',
+                            method: 'POST',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify({
+                                name: $('#firma').val(),
+                                ustid: $('#ustid').val(),
+                                adresseId: adresseData.id,
+                                ansprechpartnerId: personData.id
+                            }),
+                            dataType: 'json',
+                            success: function(firmaData) {
+                                console.log('Firma Erfolg:', firmaData);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Fehler bei der Erstellung der Firma:', error);
+                            }
+                        });
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error('Fehler bei der Erstellung der Person:', error);
@@ -191,6 +213,7 @@ $('#order-form').submit(function(e) {
         }
     });
 });
+
 
 
 // VON KUTI 
