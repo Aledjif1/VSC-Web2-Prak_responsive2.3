@@ -75,7 +75,7 @@ serviceRouter.post('/person', function(request, response) {
 
     const personDao = new PersonDao(request.app.locals.dbConnection);
     try {
-        var obj = personDao.create(request.body.anrede, request.body.vorname, request.body.nachname, request.body.firma, request.body.ustid, request.body.email, request.body.strassenr, request.body.plz, request.body.ort, request.body.land);
+        var obj = personDao.create(request.body.anrede, request.body.vorname, request.body.nachname, request.body.email);
         console.log('Service Person: Record inserted');
         response.status(200).json(obj);
     } catch (ex) {
