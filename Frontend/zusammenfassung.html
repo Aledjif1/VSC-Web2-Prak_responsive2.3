@@ -147,17 +147,105 @@
     </footer>
 
 <script>
+
+$('#order-form').submit(function(e) {
+    e.preventDefault(); // Verhindert das Neuladen der Seite nach dem Absenden des Formulars
+
+    // Erstelle zunächst die Adresse
+    $.ajax({
+        url: 'http://localhost:8000/adresse',
+        method: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({
+            strasse: $('#strassenr').val(),
+            plz: $('#plz').val(),
+            ort: $('#ort').val(),
+            landId: $('#land').val() 
+        }),
+        dataType: 'json',
+        success: function(adresseData) {
+            console.log('Adresse Erfolg:', adresseData);
+
+            // Erstelle dann die Person
             $.ajax({
-                url: 'http://localhost:8000/api/person/',
-                method: 'post',
+                url: 'http://localhost:8000/person',
+                method: 'POST',
                 contentType: 'application/json; charset=utf-8',
-                cache: false,
-				dataType: 'json'
-            })
+                data: JSON.stringify({
+                    anrede: $('#anrede').val(),
+                    vorname: $('#vorname').val(),
+                    nachname: $('#nachname').val(),
+                    email: $('#email').val()
+                }),
+                dataType: 'json',
+                success: function(personData) {
+                    console.log('Person Erfolg:', personData);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Fehler bei der Erstellung der Person:', error);
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Fehler bei der Erstellung der Adresse:', error);
+        }
+    });
+});
+
+
+
+
+
+// ODER DAS HIER
+
+$('#order-form').submit(function(e) {
+    e.preventDefault(); // Verhindert das Neuladen der Seite nach dem Absenden des Formulars
+
+    $.ajax({
+        url: 'http://localhost:8000/person',
+        method: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({
+            anrede: $('#anrede').val(),
+            vorname: $('#vorname').val(),
+            nachname: $('#nachname').val(),
+            email: $('#email').val()
+        }),
+        dataType: 'json',
+        success: function(data) {
+            console.log('Erfolg:', data);
+        },
+        error: function(xhr, status, error) {
+            console.error('Fehler:', error);
+        }
+    });
+});
+
+$('#order-form').submit(function(e) {
+    e.preventDefault(); // Verhindert das Neuladen der Seite nach dem Absenden des Formulars
+
+    $.ajax({
+        url: 'http://localhost:8000/adresse',
+        method: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({
+            strasse: $('#strasse').val(),
+            plz: $('#plz').val(),
+            ort: $('#ort').val(),
+            landId: $('#landId').val()
+        }),
+        dataType: 'json',
+        success: function(data) {
+            console.log('Erfolg:', data);
+        },
+        error: function(xhr, status, error) {
+            console.error('Fehler:', error);
+        }
+    });
+});
+
+
 
 </script>
-
-
-
 </body>
 </html>

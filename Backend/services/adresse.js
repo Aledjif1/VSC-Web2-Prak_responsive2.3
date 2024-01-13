@@ -52,11 +52,7 @@ serviceRouter.post('/adresse', function(request, response) {
 
     var errorMsgs=[];
     if (helper.isUndefined(request.body.strasse)) 
-        errorMsgs.push('strasse fehlt');
-    if (helper.isUndefined(request.body.hausnummer)) 
-        errorMsgs.push('hausnummer fehlt');
-    if (helper.isUndefined(request.body.adresszusatz)) 
-        request.body.adresszusatz = '';
+        errorMsgs.push('strasseNr fehlt');
     if (helper.isUndefined(request.body.plz)) 
         errorMsgs.push('plz fehlt');
     if (helper.isUndefined(request.body.ort)) 
@@ -75,7 +71,7 @@ serviceRouter.post('/adresse', function(request, response) {
 
     const adresseDao = new AdresseDao(request.app.locals.dbConnection);
     try {
-        var obj = adresseDao.create(request.body.strasse, request.body.hausnummer, request.body.adresszusatz, request.body.plz, request.body.ort, request.body.land.id);
+        var obj = adresseDao.create(request.body.strasse, request.body.plz, request.body.ort, request.body.land.id);
         console.log('Service Adresse: Record inserted');
         response.status(200).json(obj);
     } catch (ex) {
@@ -91,19 +87,15 @@ serviceRouter.put('/adresse', function(request, response) {
     if (helper.isUndefined(request.body.id)) 
         errorMsgs.push('id fehl');
     if (helper.isUndefined(request.body.strasse)) 
-        errorMsgs.push('strasse fehl');
-    if (helper.isUndefined(request.body.hausnummer)) 
-        errorMsgs.push('hausnummer fehl');
-    if (helper.isUndefined(request.body.adresszusatz)) 
-        request.body.adresszusatz = '';
+        errorMsgs.push('strasseNr fehlt');
     if (helper.isUndefined(request.body.plz)) 
-        errorMsgs.push('plz fehl');
+        errorMsgs.push('plz fehlt');
     if (helper.isUndefined(request.body.ort)) 
-        errorMsgs.push('ort fehl');
+        errorMsgs.push('ort fehlt');
     if (helper.isUndefined(request.body.land)) {
-        errorMsgs.push('land fehl');
+        errorMsgs.push('land fehlt');
     } else if (helper.isUndefined(request.body.land.id)) {
-        errorMsgs.push('land.id fehl');
+        errorMsgs.push('land.id fehlt');
     }
 
     if (errorMsgs.length > 0) {
@@ -114,7 +106,7 @@ serviceRouter.put('/adresse', function(request, response) {
 
     const adresseDao = new AdresseDao(request.app.locals.dbConnection);
     try {
-        var obj = adresseDao.update(request.body.id, request.body.strasse, request.body.hausnummer, request.body.adresszusatz, request.body.plz, request.body.ort, request.body.land.id);
+        var obj = adresseDao.update(request.body.id, request.body.strasse, request.body.plz, request.body.ort, request.body.land.id);
         console.log('Service Adresse: Record updated, id=' + request.body.id);
         response.status(200).json(obj);
     } catch (ex) {

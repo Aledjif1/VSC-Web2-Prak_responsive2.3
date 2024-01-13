@@ -62,22 +62,10 @@ serviceRouter.post('/person', function(request, response) {
         errorMsgs.push('vorname fehlt');
     if (helper.isUndefined(request.body.nachname)) 
         errorMsgs.push('nachname fehlt');
-    if (helper.isUndefined(request.body.firma)) 
-        request.body.firma = '';
-    if (helper.isUndefined(request.body.ustid)) 
-        request.body.ustid = '';
     if (helper.isUndefined(request.body.email)) 
         errorMsgs.push('email fehlt');
     if (!helper.isEmail(request.body.email)) 
         errorMsgs.push('email hat ein falsches Format');
-    if (helper.isUndefined(request.body.strassenr)) 
-        errorMsgs.push('Straße fehlt');
-    if (helper.isUndefined(request.body.plz)) 
-        errorMsgs.push('plz fehlt');
-    if (helper.isUndefined(request.body.ort)) 
-        errorMsgs.push('ort fehlt');
-    if (helper.isUndefined(request.body.land)) 
-        errorMsgs.push('land fehlt');
     
     if (errorMsgs.length > 0) {
         console.log('Service Person: Creation not possible, data missing');
@@ -111,23 +99,10 @@ serviceRouter.put('/person', function(request, response) {
         errorMsgs.push('vorname fehlt');
     if (helper.isUndefined(request.body.nachname)) 
         errorMsgs.push('nachname fehlt');
-    if (helper.isUndefined(request.body.firma)) 
-        request.body.firma = '';
-    if (helper.isUndefined(request.body.ustid)) 
-        request.body.ustid = '';
     if (helper.isUndefined(request.body.email)) 
         errorMsgs.push('email fehlt');
     if (!helper.isEmail(request.body.email)) 
         errorMsgs.push('email hat ein falsches Format');
-    if (helper.isUndefined(request.body.strassenr)) 
-        errorMsgs.push('Straße fehlt');
-    if (helper.isUndefined(request.body.plz)) 
-        errorMsgs.push('plz fehlt');
-    if (helper.isUndefined(request.body.ort)) 
-        errorMsgs.push('ort fehlt');
-    if (helper.isUndefined(request.body.land)) 
-        errorMsgs.push('land fehlt');
-
 
     if (errorMsgs.length > 0) {
         console.log('Service Person: Update not possible, data missing');
@@ -137,7 +112,7 @@ serviceRouter.put('/person', function(request, response) {
 
     const personDao = new PersonDao(request.app.locals.dbConnection);
     try {
-        var obj = personDao.update(request.body.id, request.body.anrede, request.body.vorname, request.body.nachname, request.body.firma, request.body.ustid, request.body.email, request.body.strassenr, request.body.plz, request.body.ort, request.body.land);
+        var obj = personDao.update(request.body.id, request.body.anrede, request.body.vorname, request.body.nachname, request.body.email);
         console.log('Service Person: Record updated, id=' + request.body.id);
         response.status(200).json(obj);
     } catch (ex) {
