@@ -4,6 +4,9 @@
         <title>iAppleSales | Bestellabschluss</title>
         <link rel="stylesheet" type="text/css" href="style/styles.css">
         <script src="script/script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="script//sessionHandling.js"></script>
+        <script src="script//shopAndBasket.js"></script>
     </head>
     <body>
         <!-- Header-Bereich -->
@@ -55,27 +58,16 @@
                 <table class="cart-table">
                     <thead>
                         <tr>
-                            <th>Artikel</th>
-                            <th>Preis</th>
+                            <th id="article-number">Pos.</th>
+                            <th id="article-name">Artikel</th>
+                            <th id="unit-price">Einzelpreis</th>
+                            <th id="quantity">Menge</th>
+                            <th id="total-price">Gesamtpreis</th>
                         </tr>
                     </thead>
                     <tbody id="cart-items-table">
                         <!-- Hier werden die ausgewählten Artikel angezeigt -->
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>Gesamtpreis (ohne MwSt.):</td>
-                            <td id="subtotal">€0.00</td>
-                        </tr>
-                        <tr>
-                            <td>MwSt. (19%):</td>
-                            <td id="tax">€0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Gesamtpreis (inkl. MwSt.):</td>
-                            <td id="cart-total">€0.00</td>
-                        </tr>
-                    </tfoot>
                 </table>
 
                 <p>Danke, dass Sie bei iAppleSales bestellt haben und bis zum nächsten Mal!</p>
@@ -95,6 +87,16 @@
             <a href="datenschutz.html">Datenschutz</a> | 
             <a href="impressum.html">Impressum</a>
         </footer>
+
+        <script>
+            $(document).ready(function() {
+                // Laden und Anzeigen des Warenkorbs
+                renderBasketneu('#cart-items-table');
+
+                // Dynamische Aktualisierung der Gesamtsumme
+                updateTotal();
+            });
+        </script>
 
     </body>
 </html>
