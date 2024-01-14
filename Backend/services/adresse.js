@@ -57,11 +57,8 @@ serviceRouter.post('/adresse', function(request, response) {
         errorMsgs.push('plz fehlt');
     if (helper.isUndefined(request.body.ort)) 
         errorMsgs.push('ort fehlt');
-    if (helper.isUndefined(request.body.land)) {
+    if (helper.isUndefined(request.body.land)) 
         errorMsgs.push('land fehlt');
-    } else if (helper.isUndefined(request.body.land.id)) {
-        errorMsgs.push('land.id fehlt');
-    }
     
     if (errorMsgs.length > 0) {
         console.log('Service Adresse: Creation not possible, data missing');
@@ -71,7 +68,7 @@ serviceRouter.post('/adresse', function(request, response) {
 
     const adresseDao = new AdresseDao(request.app.locals.dbConnection);
     try {
-        var obj = adresseDao.create(request.body.strasse, request.body.plz, request.body.ort, request.body.land.id);
+        var obj = adresseDao.create(request.body.strasse, request.body.plz, request.body.ort, request.body.land);
         console.log('Service Adresse: Record inserted');
         response.status(200).json(obj);
     } catch (ex) {
@@ -92,11 +89,8 @@ serviceRouter.put('/adresse', function(request, response) {
         errorMsgs.push('plz fehlt');
     if (helper.isUndefined(request.body.ort)) 
         errorMsgs.push('ort fehlt');
-    if (helper.isUndefined(request.body.land)) {
+    if (helper.isUndefined(request.body.land)) 
         errorMsgs.push('land fehlt');
-    } else if (helper.isUndefined(request.body.land.id)) {
-        errorMsgs.push('land.id fehlt');
-    }
 
     if (errorMsgs.length > 0) {
         console.log('Service Adresse: Update not possible, data missing');
@@ -106,7 +100,7 @@ serviceRouter.put('/adresse', function(request, response) {
 
     const adresseDao = new AdresseDao(request.app.locals.dbConnection);
     try {
-        var obj = adresseDao.update(request.body.id, request.body.strasse, request.body.plz, request.body.ort, request.body.land.id);
+        var obj = adresseDao.update(request.body.id, request.body.strasse, request.body.plz, request.body.ort, request.body.land);
         console.log('Service Adresse: Record updated, id=' + request.body.id);
         response.status(200).json(obj);
     } catch (ex) {

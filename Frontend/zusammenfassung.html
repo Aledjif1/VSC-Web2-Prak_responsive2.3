@@ -168,13 +168,13 @@ $('#order-form').submit(function(e) {
     // Erstelle Adresse
     $.ajax({
         url: 'http://localhost:8000/api/adresse',
-        method: 'POST',
+        method: 'post',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify({
             strasse: $('#strasse').val(),
             plz: $('#plz').val(),
             ort: $('#ort').val(),
-            landId: $('#land').val() 
+            land: $('#land').val() 
         }),
         dataType: 'json',
         success: function(adresseData) {
@@ -182,7 +182,7 @@ $('#order-form').submit(function(e) {
 
             // Erstelle Person
             $.ajax({
-                url: 'http://localhost:8000/person',
+                url: 'http://localhost:8000/api/person',
                 method: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({
@@ -198,7 +198,7 @@ $('#order-form').submit(function(e) {
                     // Überprüfe, ob Firmendaten vorhanden sind und erstelle Firma
                     if ($('#firma').val() || $('#ustid').val()) {
                         $.ajax({
-                            url: 'http://localhost:8000/firma',
+                            url: 'http://localhost:8000/api/firma',
                             method: 'POST',
                             contentType: 'application/json; charset=utf-8',
                             data: JSON.stringify({
