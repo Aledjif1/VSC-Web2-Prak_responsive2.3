@@ -1,7 +1,8 @@
 const helper = require('../helper.js');
 const AdresseDao = require('./adresseDao.js');
+const PersonDao = require('./personDao.js');
 
-class PersonDao {
+class FirmaDao {
 
     constructor(dbConnection) {
         this._conn = dbConnection;
@@ -13,29 +14,34 @@ class PersonDao {
 
     loadById(id) {
         const adresseDao = new AdresseDao(this._conn);
+        const personDao = new PersonDao(this._conn);
 
-        var sql = 'SELECT * FROM Person WHERE id=?';
+        var sql = 'SELECT * FROM Firma WHERE id=?';
         var statement = this._conn.prepare(sql);
         var result = statement.get(id);
 
         if (helper.isUndefined(result)) 
             throw new Error('No Record found by id=' + id);
 
-        if (result.anrede == 0) 
-            result.anrede = 'Herr';
-        else 
-            result.anrede = 'Frau';
-
         result.adresse = adresseDao.loadById(result.adresseId);
         delete result.adresseId;
+
+
+        if (helper.isNull(result.ansprechpartnerId)) {
+            result.ansprechpartner = null;
+        } else {
+            result.ansprechpartner = personDao.loadById(result.ansprechpartnerId);
+        }
+        delete result.ansprechpartnerId;
 
         return result;
     }
 
     loadAll() {
         const adresseDao = new AdresseDao(this._conn);
+        const personDao = new PersonDao(this._conn);
 
-        var sql = 'SELECT * FROM Person';
+        var sql = 'SELECT * FROM Firma';
         var statement = this._conn.prepare(sql);
         var result = statement.all();
 
@@ -43,20 +49,23 @@ class PersonDao {
             return [];
 
         for (var i = 0; i < result.length; i++) {
-            if (result[i].anrede == 0) 
-                result[i].anrede = 'Herr';
-            else 
-                result[i].anrede = 'Frau';
-            
             result[i].adresse = adresseDao.loadById(result[i].adresseId);
             delete result[i].adresseId;
+
+
+            if (helper.isNull(result[i].ansprechpartnerId)) {
+                result[i].ansprechpartner = null;
+            } else {
+                result[i].ansprechpartner = personDao.loadById(result[i].ansprechpartnerId);
+            }
+            delete result[i].ansprechpartnerId;
         }
 
         return result;
     }
 
     exists(id) {
-        var sql = 'SELECT COUNT(id) AS cnt FROM Person WHERE id=?';
+        var sql = 'SELECT COUNT(id) AS cnt FROM Firma WHERE id=?';
         var statement = this._conn.prepare(sql);
         var result = statement.get(id);
 
@@ -66,17 +75,10 @@ class PersonDao {
         return false;
     }
 
-<<<<<<< HEAD
-    create(anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = '', plz = '', ort = '', land = '') {
-        var sql = 'INSERT INTO Person (anrede,vorname,nachname,firma,ustid,email,strassenr, plz, ort, land) VALUES (?,?,?,?,?,?,?,?,?,?)';
+    create(name = '', ustid = '', adresseId = '', ansprechpartnerId = '') {
+        var sql = 'INSERT INTO Firma (name,ustid,adresseId,ansprechpartnerId) VALUES (?,?,?,?)';
         var statement = this._conn.prepare(sql);
-        var params = [anrede, vorname, nachname, firma, ustid, email, strassenr, plz, ort, land, email];
-=======
-    create(anrede, vorname = '', nachname = '', email = '') {
-        var sql = 'INSERT INTO Person (anrede,vorname,nachname,email) VALUES (?,?,?,?)';
-        var statement = this._conn.prepare(sql);
-        var params = [anrede, vorname, nachname, email];
->>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
+        var params = [name, ustid, adresseId, ansprechpartnerId];
         var result = statement.run(params);
 
         if (result.changes != 1) 
@@ -85,17 +87,10 @@ class PersonDao {
         return this.loadById(result.lastInsertRowid);
     }
 
-<<<<<<< HEAD
-    update(id, anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = '', plz = '', ort = '', land = '') {
-        var sql = 'UPDATE Person SET anrede=?,vorname=?,nachname=?,firma=?,ustid=?,email=?,strassenr=?,plz=?,ort=?,land=? WHERE id=?';
+    update(id, name = '', ustid = '', adresseId = '', ansprechpartnerId = '') {
+        var sql = 'UPDATE Firma SET name=?,ustid=?,adresseId=?,ansprechpartnerId=? WHERE id=?';
         var statement = this._conn.prepare(sql);
-        var params = [anrede, vorname, nachname, firma, ustid, email, strassenr, plz, ort, land, email];
-=======
-    update(id, anrede, vorname = '', nachname = '', email = '') {
-        var sql = 'UPDATE Person SET anrede=?,vorname=?,nachname=?,email=? WHERE id=?';
-        var statement = this._conn.prepare(sql);
-        var params = [anrede, vorname, nachname, email];
->>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
+        var params = [name, ustid, adresseId, ansprechpartnerId, id];
         var result = statement.run(params);
 
         if (result.changes != 1) 
@@ -106,7 +101,7 @@ class PersonDao {
 
     delete(id) {
         try {
-            var sql = 'DELETE FROM Person WHERE id=?';
+            var sql = 'DELETE FROM Firma WHERE id=?';
             var statement = this._conn.prepare(sql);
             var result = statement.run(id);
 
@@ -120,8 +115,8 @@ class PersonDao {
     }
 
     toString() {
-        console.log('PersonDao [_conn=' + this._conn + ']');
+        console.log('FirmaDao [_conn=' + this._conn + ']');
     }
 }
 
-module.exports = PersonDao;
+module.exports = FirmaDao;

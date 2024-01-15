@@ -62,14 +62,18 @@ serviceRouter.post('/person', function(request, response) {
         errorMsgs.push('vorname fehlt');
     if (helper.isUndefined(request.body.nachname)) 
         errorMsgs.push('nachname fehlt');
+<<<<<<< HEAD
     if (helper.isUndefined(request.body.firma)) 
         request.body.firma = '';
     if (helper.isUndefined(request.body.ustid)) 
         request.body.ustid = '';
+=======
+>>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
     if (helper.isUndefined(request.body.email)) 
         errorMsgs.push('email fehlt');
     if (!helper.isEmail(request.body.email)) 
         errorMsgs.push('email hat ein falsches Format');
+<<<<<<< HEAD
     if (helper.isUndefined(request.body.strassenr)) 
         errorMsgs.push('Straße fehlt');
     if (helper.isUndefined(request.body.plz)) 
@@ -78,6 +82,8 @@ serviceRouter.post('/person', function(request, response) {
         errorMsgs.push('ort fehlt');
     if (helper.isUndefined(request.body.land)) 
         errorMsgs.push('land fehlt');
+=======
+>>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
     
     if (errorMsgs.length > 0) {
         console.log('Service Person: Creation not possible, data missing');
@@ -87,7 +93,11 @@ serviceRouter.post('/person', function(request, response) {
 
     const personDao = new PersonDao(request.app.locals.dbConnection);
     try {
+<<<<<<< HEAD
         var obj = personDao.create(request.body.anrede, request.body.vorname, request.body.nachname, request.body.firma, request.body.ustid, request.body.email, request.body.strassenr, request.body.plz, request.body.ort, request.body.land);
+=======
+        var obj = personDao.create(request.body.anrede, request.body.vorname, request.body.nachname, request.body.email);
+>>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
         console.log('Service Person: Record inserted');
         response.status(200).json(obj);
     } catch (ex) {
@@ -111,14 +121,18 @@ serviceRouter.put('/person', function(request, response) {
         errorMsgs.push('vorname fehlt');
     if (helper.isUndefined(request.body.nachname)) 
         errorMsgs.push('nachname fehlt');
+<<<<<<< HEAD
     if (helper.isUndefined(request.body.firma)) 
         request.body.firma = '';
     if (helper.isUndefined(request.body.ustid)) 
         request.body.ustid = '';
+=======
+>>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
     if (helper.isUndefined(request.body.email)) 
         errorMsgs.push('email fehlt');
     if (!helper.isEmail(request.body.email)) 
         errorMsgs.push('email hat ein falsches Format');
+<<<<<<< HEAD
     if (helper.isUndefined(request.body.strassenr)) 
         errorMsgs.push('Straße fehlt');
     if (helper.isUndefined(request.body.plz)) 
@@ -128,6 +142,8 @@ serviceRouter.put('/person', function(request, response) {
     if (helper.isUndefined(request.body.land)) 
         errorMsgs.push('land fehlt');
 
+=======
+>>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
 
     if (errorMsgs.length > 0) {
         console.log('Service Person: Update not possible, data missing');
@@ -137,7 +153,11 @@ serviceRouter.put('/person', function(request, response) {
 
     const personDao = new PersonDao(request.app.locals.dbConnection);
     try {
+<<<<<<< HEAD
         var obj = personDao.update(request.body.id, request.body.anrede, request.body.vorname, request.body.nachname, request.body.firma, request.body.ustid, request.body.email, request.body.strassenr, request.body.plz, request.body.ort, request.body.land);
+=======
+        var obj = personDao.update(request.body.id, request.body.anrede, request.body.vorname, request.body.nachname, request.body.email);
+>>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
         console.log('Service Person: Record updated, id=' + request.body.id);
         response.status(200).json(obj);
     } catch (ex) {

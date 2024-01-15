@@ -56,10 +56,10 @@ class AdresseDao {
         return false;
     }
 
-    create(strasse = '', hausnummer = '', adresszusatz = '', plz = '', ort = '', landId = 1) {
-        var sql = 'INSERT INTO Adresse (strasse,hausnummer,adresszusatz,plz,ort,landId) VALUES (?,?,?,?,?,?)';
+    create(strasse = '', plz = '', ort = '', landId = 1) {
+        var sql = 'INSERT INTO Adresse (strasse,plz,ort,landId) VALUES (?,?,?,?)';
         var statement = this._conn.prepare(sql);
-        var params = [strasse, hausnummer, adresszusatz, plz, ort, landId];
+        var params = [strasse, plz, ort, landId];
         var result = statement.run(params);
 
         if (result.changes != 1) 
@@ -68,10 +68,10 @@ class AdresseDao {
         return this.loadById(result.lastInsertRowid);
     }
 
-    update(id, strasse = '', hausnummer = '', adresszusatz = '', plz = '', ort = '', landId = 1) {
-        var sql = 'UPDATE Adresse SET strasse=?,hausnummer=?,adresszusatz=?,plz=?,ort=?,landId=? WHERE id=?';
+    update(id, strasse = '', plz = '', ort = '', landId = 1) {
+        var sql = 'UPDATE Adresse SET strasse=?,plz=?,ort=?,landId=? WHERE id=?';
         var statement = this._conn.prepare(sql);
-        var params = [strasse, hausnummer, adresszusatz, plz, ort, landId, id];
+        var params = [strasse, plz, ort, landId, id];
         var result = statement.run(params);
 
         if (result.changes != 1) 

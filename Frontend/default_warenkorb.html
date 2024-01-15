@@ -61,6 +61,7 @@
             <button type="button" id="emptyShoppingBasketButton">Warenkorb leeren</button>
         </p>
         <button class="order-button" id="checkout-button">Bestellung abschließen</button>
+        <a href="bestellabschluss.html">Bestellabschluss</a>
     </div>
 
     </main>
@@ -101,9 +102,15 @@
             var cartTotal = subtotal + tax;
     
             // Aktualisiere die Werte in der Tabelle
+<<<<<<< HEAD
             document.getElementById('subtotal').textContent = '€' + subtotal.toFixed(2);
             document.getElementById('tax').textContent = '€' + tax.toFixed(2);
             document.getElementById('cart-total').textContent = '€' + cartTotal.toFixed(2);
+=======
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2) + '€';
+            document.getElementById('tax').textContent = tax.toFixed(2) + '€';
+            document.getElementById('cart-total').textContent = cartTotal.toFixed(2) + '€';
+>>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
         }
     </script>
 
