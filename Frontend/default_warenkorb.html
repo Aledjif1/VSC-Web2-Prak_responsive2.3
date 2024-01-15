@@ -50,8 +50,9 @@
                 <th id="article-name">Artikel</th>
                 <th id="unit-price">Einzelpreis</th>
                 <th id="quantity">Menge</th>
+                <th>Mengenaenderung</th>
                 <th id="total-price">Gesamtpreis</th>
-                <th id="total-price">Aktion</th>
+                <th id="total-price">>Aktion</th>
             </tr>
             </thead>
             <tbody id="cart-items-table">
@@ -123,15 +124,53 @@
         <a href="impressum.html">Impressum</a>
     </footer>
     <script>
+            $(document).ready(function() {
+                 renderBasket('#cart-items-table');
 
-        $(document).ready(function() {
-            console.log('output basket');
-            renderBasket('#basket > tbody');
+            // Event-Handler für Mengenänderung
+            $('#cart-items-table').on('change', '.quantity-input', function() {
+                updateTotal($(this));
+            });
 
             $('#emptyShoppingBasketButton').click(function() {
                 emptyBasket();
             });
         });
+
+        function updateTotal(input) {
+            var row = input.closest('tr');
+            var unitPrice = parseFloat(row.find('.unit-price').text().replace('€', ''));
+            var newQuantity = parseInt(input.val());
+            var totalPriceCell = row.find('.total-price');
+
+            // Update Gesamtpreis in der Tabelle
+            var newTotalPrice = unitPrice * newQuantity;
+            totalPriceCell.text(newTotalPrice.toFixed(2) + '€');
+
+            // Rufe die Funktion zur Aktualisierung des Gesamtpreises auf
+            updateCartTotal();
+        }
+
+        function updateCartTotal() {
+            var cartItems = $('#cart-items-table tr');
+            var subtotal = 0;
+
+            // Berechne den Gesamtpreis 
+            cartItems.each(function() {
+                var unitPrice = parseFloat($(this).find('.unit-price').text().replace('€', ''));
+                var quantity = parseInt($(this).find('.quantity-input').val());
+                var totalPrice = unitPrice * quantity;
+                subtotal += totalPrice;
+            });
+
+            var tax = 0.19 * subtotal; // 19% Mehrwertsteuer
+            var cartTotal = subtotal + tax;
+
+            // Aktualisiere die Werte in der Tabelle
+            $('#subtotal').text(subtotal.toFixed(2) + '€');
+            $('#tax').text(tax.toFixed(2) + '€');
+            $('#cart-total').text(cartTotal.toFixed(2) + '€');
+        }
         
     </script>
 </body>

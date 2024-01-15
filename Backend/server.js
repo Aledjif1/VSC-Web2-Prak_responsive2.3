@@ -74,14 +74,13 @@ try {
     /*
     serviceRouter = require('./services/branche.js');
     app.use(TOPLEVELPATH, serviceRouter);
-    */
-
+    
 
     serviceRouter = require('./services/firma.js');
     app.use(TOPLEVELPATH, serviceRouter);
     
 
-    /*
+    
     serviceRouter = require('./services/download.js');
     app.use(TOPLEVELPATH, serviceRouter);
     */

@@ -128,7 +128,7 @@
 
                 <div class="form-group">
                     <label for="land">Land:</label>
-                    <input type="text" id="land" name="land" placeholder="Land eingeben..." required>
+                    <select id="land" name="land"></select>
                 </div>
 
                 <div class="form-group">
@@ -164,20 +164,91 @@
 
 =======
 
+
+
 $(document).ready(function() {
             // Laden und Anzeigen des Warenkorbs
             renderBasket('#basket > tbody');
+
+            // get country data
+            $.ajax({
+                url: 'http://localhost:8000/api/land/alle',
+                method: 'get',
+				contentType: 'application/json; charset=utf-8',
+                cache: false
+            }).done(function (response) {
+                // umweandeln in html
+                for (var i = 0; i < response.length; i++) {
+                    $('#land').append('<option value="' + response[i].id + '">' + response[i].bezeichnung + '</option>');
+                }
+                // deutschland selektieren
+                $('#land option[value="44"]').prop("selected", true);
+                
+            }).fail(function (jqXHR, statusText, error) {
+                console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
+                alert('Ein Fehler ist aufgetreten');
+            });
+
+
+
+            
+
+
+    
 });
 
     $('#emptyShoppingBasketButton').click(function() {
                 emptyBasket();
     });
 
-
-
     
 $('#order-form').submit(function(e) {
     e.preventDefault(); // Verhindert das Neuladen der Seite nach dem Absenden des Formulars
+
+    // daten aus dem formular übernehmen
+    var bestellung = {
+        person: {
+            anrede: $('#anrede').val(),
+            vorname: $('#vorname').val().trim(),
+            nachname: $('#nachname').val().trim(),
+            firma: $('#firma').val().trim(),
+            ust: $('#ustid').val().trim(),
+            email: $('#email').val().trim()
+        },
+        adresse: {
+            strasse: $('#strasse').val().trim(),
+            plz: $('#plz').val().trim(),
+            ort: $('#ort').val().trim(),
+            land: $('#land').val().trim()
+        },
+        zahlungsart: 4, // hardcoded, rechnung
+        warenkorb: basket   // kommt aus der session, sind die bestellpositionen
+    };
+
+    console.log('folgendes wird gesendet', bestellung);
+
+    $.ajax({
+                url: 'http://localhost:8000/api/bestellungMitKundendaten',
+                method: 'post',
+				contentType: 'application/json; charset=utf-8',
+                cache: false,
+				data: JSON.stringify(bestellung)
+            }).done(function (response) {
+                console.log('bestellung erfolgreich gespeichert', response);
+                // bestellung erfolgreich
+                // warenkorb leeren
+                basket = [];
+                setJSONSessionItem('shoppingBasket', basket);
+                // weiterleiten auf die siete abschluss und die bestellid mit geben
+                location.href = 'bestellabschluss.html?bestellId=' + response.id;
+                
+            }).fail(function (jqXHR, statusText, error) {
+                console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
+                alert('Ein Fehler ist aufgetreten');
+            });
+
+
+    /*
 
     // Erstelle Adresse
     $.ajax({
@@ -240,11 +311,12 @@ $('#order-form').submit(function(e) {
             console.error('Fehler bei der Erstellung der Adresse:', error);
         }
     });
+    */
 });
 
 
 
-// VON KUTI 
+// VON HR KUTI 
 /*
 $('#addtax').click(function() {
             console.log('button addtax clicked');
