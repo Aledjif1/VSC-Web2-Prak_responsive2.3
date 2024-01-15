@@ -163,6 +163,21 @@ function renderBasket(parentNode) {
             ));
             node.append($('<td>').text(formatToEuro(item.product.bruttopreis)));
             node.append($('<td>').text(item.amount));
+            node.append(
+                $('<td>')
+                    .append(
+                        $('<button>')
+                            .attr('type', 'button')
+                            .attr('onClick', 'changeQuantity(' + idx + ', -1)')
+                            .text('-')
+                    )
+                    .append(
+                        $('<button>')
+                            .attr('type', 'button')
+                            .attr('onClick', 'changeQuantity(' + idx + ', 1)')
+                            .text('+')
+                    )
+            );
             node.append($('<td>').text(formatToEuro(sum)));
             node.append(
                 $('<td>')
@@ -272,4 +287,21 @@ function emptyBasket() {
     
     // redraw basket
     renderBasket('#basket > tbody');
+}
+
+function changeQuantity(idx, delta) {
+    if (basket[idx]) {
+        // Überprüfe, ob die neue Menge nach der Änderung positiv ist
+        var newAmount = basket[idx].amount + delta;
+        if (newAmount >= 0) {
+            // Aktualisiere die Menge
+            basket[idx].amount = newAmount;
+
+            // Speichere die Änderungen in localStorage
+            setJSONSessionItem('shoppingBasket', basket);
+
+            // Aktualisiere den Warenkorb
+            renderBasket('#basket > tbody');
+        }
+    }
 }
