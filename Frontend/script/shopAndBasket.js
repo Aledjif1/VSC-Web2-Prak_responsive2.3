@@ -290,12 +290,18 @@ function emptyBasket() {
 }
 
 function changeQuantity(idx, change) {
-    // Ändere die Menge im Warenkorb
-    basket[idx].amount += change;
+    // Überprüfe, ob die Änderung eine negative Menge verursachen würde
+    if (basket[idx].amount + change >= 0) {
+        // Ändere die Menge im Warenkorb
+        basket[idx].amount += change;
 
-    // Speichere die Änderung in der Session
-    setJSONSessionItem('shoppingBasket', basket);
+        // Speichere die Änderung in der Session
+        setJSONSessionItem('shoppingBasket', basket);
 
-    // Aktualisiere die Anzeige des Warenkorbs
-    renderBasket('#basket > tbody');
+        // Aktualisiere die Anzeige des Warenkorbs
+        renderBasket('#basket > tbody');
+    } else {
+        // Zeige eine Fehlermeldung oder handle den Fall, dass die Menge negativ wird
+        console.error('Die Menge kann nicht negativ sein.');
+    }
 }
