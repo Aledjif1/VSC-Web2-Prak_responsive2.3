@@ -26,8 +26,6 @@ class PersonDao {
         else 
             result.anrede = 'Frau';
 
-        result.geburtstag = helper.formatToGermanDate(helper.parseSQLDateTimeString(result.geburtstag));
-
         result.adresse = adresseDao.loadById(result.adresseId);
         delete result.adresseId;
 
@@ -49,8 +47,6 @@ class PersonDao {
                 result[i].anrede = 'Herr';
             else 
                 result[i].anrede = 'Frau';
-
-            result[i].geburtstag = helper.formatToGermanDate(helper.parseSQLDateTimeString(result[i].geburtstag));
             
             result[i].adresse = adresseDao.loadById(result[i].adresseId);
             delete result[i].adresseId;
@@ -70,10 +66,10 @@ class PersonDao {
         return false;
     }
 
-    create(anrede = 'Herr', vorname = '', nachname = '', adresseId = 1, telefonnummer = '', email = '', geburtstag = null) {
-        var sql = 'INSERT INTO Person (anrede,vorname,nachname,adresseId,telefonnummer,email,geburtstag) VALUES (?,?,?,?,?,?,?)';
+    create(anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = '', plz = '', ort = '', land = '') {
+        var sql = 'INSERT INTO Person (anrede,vorname,nachname,firma,ustid,email,strassenr, plz, ort, land) VALUES (?,?,?,?,?,?,?,?,?,?)';
         var statement = this._conn.prepare(sql);
-        var params = [(helper.strStartsWith(anrede, 'He') ? 0 : 1), vorname, nachname, adresseId, telefonnummer, email, (helper.isNull(geburtstag) ? null : helper.formatToSQLDate(geburtstag))];
+        var params = [anrede, vorname, nachname, firma, ustid, email, strassenr, plz, ort, land, email];
         var result = statement.run(params);
 
         if (result.changes != 1) 
@@ -82,10 +78,10 @@ class PersonDao {
         return this.loadById(result.lastInsertRowid);
     }
 
-    update(id, anrede = 'Herr', vorname = '', nachname = '', adresseId = 1, telefonnummer = '', email = '', geburtstag = null) {
-        var sql = 'UPDATE Person SET anrede=?,vorname=?,nachname=?,adresseId=?,telefonnummer=?,email=?,geburtstag=? WHERE id=?';
+    update(id, anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = '', plz = '', ort = '', land = '') {
+        var sql = 'UPDATE Person SET anrede=?,vorname=?,nachname=?,firma=?,ustid=?,email=?,strassenr=?,plz=?,ort=?,land=? WHERE id=?';
         var statement = this._conn.prepare(sql);
-        var params = [(helper.strStartsWith(anrede, 'He') ? 0 : 1), vorname, nachname, adresseId, telefonnummer, email, (helper.isNull(geburtstag) ? null : helper.formatToSQLDate(geburtstag)), id];
+        var params = [anrede, vorname, nachname, firma, ustid, email, strassenr, plz, ort, land, email];
         var result = statement.run(params);
 
         if (result.changes != 1) 
