@@ -296,7 +296,7 @@ function changeQuantity(idx, delta) {
         if (newAmount >= 0) {
             // Aktualisiere die Menge
             basket[idx].amount = newAmount;
-
+g
             // Speichere die Änderungen in localStorage
             setJSONSessionItem('shoppingBasket', basket);
 
