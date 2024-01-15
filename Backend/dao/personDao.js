@@ -66,6 +66,19 @@ class PersonDao {
         return false;
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    create(anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = '', plz = '', ort = '', land = '') {
+        var sql = 'INSERT INTO Person (anrede,vorname,nachname,firma,ustid,email,strassenr, plz, ort, land) VALUES (?,?,?,?,?,?,?,?,?,?)';
+        var statement = this._conn.prepare(sql);
+        var params = [anrede, vorname, nachname, firma, ustid, email, strassenr, plz, ort, land, email];
+=======
+    create(anrede, vorname = '', nachname = '', email = '') {
+        var sql = 'INSERT INTO Person (anrede,vorname,nachname,email) VALUES (?,?,?,?)';
+        var statement = this._conn.prepare(sql);
+        var params = [anrede, vorname, nachname, email];
+>>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
+=======
     create(anrede, vorname = '', nachname = '', firma = '', ust = '', email = '', adresseId) {
         if (anrede.toLowerCase() == 'frau') 
             anrede = 1;
@@ -75,6 +88,7 @@ class PersonDao {
         var sql = 'INSERT INTO Person (anrede,vorname,nachname,firma,ust,email,adresseId) VALUES (?,?,?,?,?,?,?)';
         var statement = this._conn.prepare(sql);
         var params = [anrede, vorname, nachname, firma, ust, email, adresseId];
+>>>>>>> 3c4adc8641fc0f2849d10660ee8d7d217564d22d
         var result = statement.run(params);
 
         if (result.changes != 1) 
@@ -83,6 +97,19 @@ class PersonDao {
         return this.loadById(result.lastInsertRowid);
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    update(id, anrede, vorname = '', nachname = '', firma = '', ustid = '', email = '', strassenr = '', plz = '', ort = '', land = '') {
+        var sql = 'UPDATE Person SET anrede=?,vorname=?,nachname=?,firma=?,ustid=?,email=?,strassenr=?,plz=?,ort=?,land=? WHERE id=?';
+        var statement = this._conn.prepare(sql);
+        var params = [anrede, vorname, nachname, firma, ustid, email, strassenr, plz, ort, land, email];
+=======
+    update(id, anrede, vorname = '', nachname = '', email = '') {
+        var sql = 'UPDATE Person SET anrede=?,vorname=?,nachname=?,email=? WHERE id=?';
+        var statement = this._conn.prepare(sql);
+        var params = [anrede, vorname, nachname, email];
+>>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
+=======
     update(id, anrede, vorname = '', nachname = '', firma = '', ust = '', email = '', adresseId) {
         if (anrede.toLowerCase() == 'frau') 
             anrede = 1;
@@ -92,6 +119,7 @@ class PersonDao {
         var sql = 'UPDATE Person SET anrede=?,vorname=?,nachname=?,firma=?,ust=?,email=?,adresseId=? WHERE id=?';
         var statement = this._conn.prepare(sql);
         var params = [anrede, vorname, nachname, firma, ust, email, adresseId];
+>>>>>>> 3c4adc8641fc0f2849d10660ee8d7d217564d22d
         var result = statement.run(params);
 
         if (result.changes != 1) 
