@@ -66,6 +66,8 @@ serviceRouter.post('/person', function(request, response) {
         errorMsgs.push('email fehlt');
     if (!helper.isEmail(request.body.email)) 
         errorMsgs.push('email hat ein falsches Format');
+    if (helper.isUndefined(request.body.adresse)) 
+        errorMsgs.push('adresse fehlt');
     
     if (errorMsgs.length > 0) {
         console.log('Service Person: Creation not possible, data missing');
@@ -75,7 +77,7 @@ serviceRouter.post('/person', function(request, response) {
 
     const personDao = new PersonDao(request.app.locals.dbConnection);
     try {
-        var obj = personDao.create(request.body.anrede, request.body.vorname, request.body.nachname, request.body.email);
+        var obj = personDao.create(request.body.anrede, request.body.vorname, request.body.nachname, request.body.firma, request.body.ust, request.body.email, request.body.adresse);
         console.log('Service Person: Record inserted');
         response.status(200).json(obj);
     } catch (ex) {
@@ -103,6 +105,8 @@ serviceRouter.put('/person', function(request, response) {
         errorMsgs.push('email fehlt');
     if (!helper.isEmail(request.body.email)) 
         errorMsgs.push('email hat ein falsches Format');
+        if (helper.isUndefined(request.body.adresse)) 
+            errorMsgs.push('adresse fehlt');
 
     if (errorMsgs.length > 0) {
         console.log('Service Person: Update not possible, data missing');
@@ -112,7 +116,7 @@ serviceRouter.put('/person', function(request, response) {
 
     const personDao = new PersonDao(request.app.locals.dbConnection);
     try {
-        var obj = personDao.update(request.body.id, request.body.anrede, request.body.vorname, request.body.nachname, request.body.email);
+        var obj = personDao.update(request.body.id, request.body.anrede, request.body.vorname, request.body.nachname, request.body.firma, request.body.ust, request.body.email, request.body.adresse);
         console.log('Service Person: Record updated, id=' + request.body.id);
         response.status(200).json(obj);
     } catch (ex) {

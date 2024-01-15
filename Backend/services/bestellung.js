@@ -1,5 +1,7 @@
 const helper = require('../helper.js');
 const BestellungDao = require('../dao/bestellungDao.js');
+const PersonDao = require('../dao/personDao.js');
+const AdresseDao = require('../dao/adresseDao.js');
 const express = require('express');
 var serviceRouter = express.Router();
 
@@ -87,6 +89,73 @@ serviceRouter.post('/bestellung', function(request, response) {
     const bestellungDao = new BestellungDao(request.app.locals.dbConnection);
     try {
         var obj = bestellungDao.create(request.body.bestellzeitpunkt, request.body.besteller, request.body.zahlungsart.id, request.body.bestellpositionen);
+        console.log('Service Bestellung: Record inserted');
+        response.status(200).json(obj);
+    } catch (ex) {
+        console.error('Service Bestellung: Error creating new record. Exception occured: ' + ex.message);
+        response.status(400).json({ 'fehler': true, 'nachricht': ex.message });
+    }
+});
+
+serviceRouter.post('/bestellungMitKundendaten', function(request, response) {
+    console.log('Service Bestellung: Client requested creation of new record');
+
+    var errorMsgs=[];
+    request.body.bestellzeitpunkt = helper.getNow();
+    if (helper.isUndefined(request.body.zahlungsart)) {
+        errorMsgs.push('zahlungsart fehlt');
+    } else if (helper.isUndefined(request.body.zahlungsart)) {
+        errorMsgs.push('zahlungsart gesetzt, aber id fehlt');
+    }
+    if (helper.isUndefined(request.body.warenkorb)) {
+        errorMsgs.push('warenkorb fehlen');
+    } else if (!helper.isArray(request.body.warenkorb)) {
+        errorMsgs.push('warenkorb ist kein array');
+    } else if (request.body.warenkorb.length == 0) {
+        errorMsgs.push('warenkorb is leer, nichts zu speichern');
+    }
+
+    if (helper.isUndefined(request.body.adresse)) {
+        errorMsgs.push('adressobjekt fehlen');
+    } else if (helper.isUndefined(request.body.adresse.strasse)) {
+        errorMsgs.push('strasse fehlen');
+    } else if (helper.isUndefined(request.body.adresse.plz)) {
+        errorMsgs.push('plz fehlen');
+    } else if (helper.isUndefined(request.body.adresse.ort)) {
+        errorMsgs.push('ort fehlen');
+    } 
+
+    if (helper.isUndefined(request.body.person.anrede)) {
+        errorMsgs.push('anrede fehlt');
+    } else if (request.body.person.anrede.toLowerCase() !== 'herr' && request.body.person.anrede.toLowerCase() !== 'frau') {
+        errorMsgs.push('anrede falsch. Herr und Frau sind erlaubt');
+    }        
+    if (helper.isUndefined(request.body.person.vorname)) 
+        errorMsgs.push('vorname fehlt');
+    if (helper.isUndefined(request.body.person.nachname)) 
+        errorMsgs.push('nachname fehlt');
+    if (helper.isUndefined(request.body.person.email)) 
+        errorMsgs.push('email fehlt');
+    if (!helper.isEmail(request.body.person.email)) 
+        errorMsgs.push('email hat ein falsches Format');
+    
+    
+    if (errorMsgs.length > 0) {
+        console.log('Service Bestellung: Creation not possible, data missing');
+        response.status(400).json({ 'fehler': true, 'nachricht': 'Funktion nicht möglich. Fehlende Daten: ' + helper.concatArray(errorMsgs) });
+        return;
+    }
+
+    const adresseDao = new AdresseDao(request.app.locals.dbConnection);
+    const personDao = new PersonDao(request.app.locals.dbConnection);
+    const bestellungDao = new BestellungDao(request.app.locals.dbConnection);
+    try {
+        // Adresse speichern
+        var neueAdresse = adresseDao.create(request.body.adresse.strasse, request.body.adresse.plz, request.body.adresse.ort, request.body.adresse.land);
+        // dann person speichern
+        var neuerBesteller = personDao.create(request.body.person.anrede, request.body.person.vorname, request.body.person.nachname, request.body.person.firma, request.body.person.ust, request.body.person.email, neueAdresse.id);
+        // bestellung speichern
+        var obj = bestellungDao.create(request.body.bestellzeitpunkt, neuerBesteller.id, request.body.zahlungsart, request.body.warenkorb);
         console.log('Service Bestellung: Record inserted');
         response.status(200).json(obj);
     } catch (ex) {

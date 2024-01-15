@@ -55,6 +55,8 @@ function jumpToDetails(id) {
     location.href = 'default_produktdetail.html?id=' + id;
 }
 /* Zähler für Warenkorb */
+/*
+KEINE AHNUNG WANN DAS HIER GENUTZT WIRD; MACHT SO KEINEN SINN!!!
     // Zähler für den Warenkorb auf 0 setzen
     let itemCount = 0;
     // Funktion zum Erhöhen des Zählers und Aktualisieren des Warenkorbs
@@ -69,6 +71,7 @@ function jumpToDetails(id) {
             increaseCartCount();
         });
     });
+    */
 
 function addToBasket(id) {
 

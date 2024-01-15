@@ -66,19 +66,11 @@ CREATE TABLE Person (
 	anrede INTEGER NOT NULL DEFAULT 0,
 	vorname TEXT NOT NULL,
 	nachname TEXT NOT NULL,
+	firma TEXT NOT NULL,
+	ust TEXT NOT NULL,
 	adresseId INTEGER NOT NULL,
 	email TEXT NOT NULL,
 	CONSTRAINT fk_Person1 FOREIGN KEY (adresseId) REFERENCES Adresse(id)
-);
-
-CREATE TABLE Firma (
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-	ustid TEXT,
-    adresseId INTEGER NOT NULL,
-    ansprechpartnerId INTEGER DEFAULT NULL,
-    CONSTRAINT fk_Firma1 FOREIGN KEY (adresseId) REFERENCES Adresse(id),
-    CONSTRAINT fk_Firma2 FOREIGN KEY (ansprechpartnerId) REFERENCES Person(id)
 );
 
 -- ------------------------------
