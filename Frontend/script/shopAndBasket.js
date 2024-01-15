@@ -289,19 +289,13 @@ function emptyBasket() {
     renderBasket('#basket > tbody');
 }
 
-function changeQuantity(idx, delta) {
-    if (basket[idx]) {
-        // Überprüfe, ob die neue Menge nach der Änderung positiv ist
-        var newAmount = basket[idx].amount + delta;
-        if (newAmount >= 0) {
-            // Aktualisiere die Menge
-            basket[idx].amount = newAmount;
-g
-            // Speichere die Änderungen in localStorage
-            setJSONSessionItem('shoppingBasket', basket);
+function changeQuantity(idx, change) {
+    // Ändere die Menge im Warenkorb
+    basket[idx].amount += change;
 
-            // Aktualisiere den Warenkorb
-            renderBasket('#basket > tbody');
-        }
-    }
+    // Speichere die Änderung in der Session
+    setJSONSessionItem('shoppingBasket', basket);
+
+    // Aktualisiere die Anzeige des Warenkorbs
+    renderBasket('#basket > tbody');
 }
