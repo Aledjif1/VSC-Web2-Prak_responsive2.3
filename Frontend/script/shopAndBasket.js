@@ -183,6 +183,60 @@ function renderBasket(parentNode) {
     }
 }
 
+function renderBasketneu(parentNode) {
+    // get basket data from session
+    if (existsSessionItem('shoppingBasket')) 
+        basket = getJSONSessionItem('shoppingBasket');
+
+    // empty parentNode
+    $(parentNode).empty();
+
+    // show message if no basket positions
+    if (basket.length == 0) {
+        console.log("no positions in basket");
+        $(parentNode).append('<tr><td colspan="6" class="missingData">Der Warenkorb ist leer</td></tr>');
+    } else {
+        var sum = 0.0;
+        var tax = 0.0;
+        var totalTax = 0.0;
+        var totalSum = 0.0;
+
+        $(basket).each(function (idx, item) {
+            // calc position sum
+            sum = item.product.bruttopreis * item.amount;
+
+            // containing tax
+            tax = item.product.mehrwertsteueranteil * item.amount;
+
+            // add up totals
+            totalTax += tax;
+            totalSum += sum;
+
+            // create node
+            var node = $('<tr>');
+           
+            node.append($('<td>').text(idx + 1));
+            node.append($('<td>').append(
+                $('<a>')
+                    .attr('href', 'default_produktdetail.html?id=' + item.product.id)
+                    .text(item.product.bezeichnung + ' (Art.-Nr.: ' + item.product.id + ')')
+            ));
+            node.append($('<td>').text(formatToEuro(item.product.bruttopreis)));
+            node.append($('<td>').text(item.amount));
+            node.append($('<td>').text(formatToEuro(sum)));
+            
+            // output node
+            $(parentNode).append(node);
+        });
+
+        $(parentNode)
+            .append('<tr><td colspan="6">&nbsp;</td></tr>')
+            .append('<tr><td colspan="4" class="cart-total">Gesamtsumme: </td><td colspan="2" class="bold">' + formatToEuro(totalSum) + '</td></tr>')
+            .append('<tr><td colspan="4" class="tax">enth. MwSt.: </td><td colspan="2" class="bold">' + formatToEuro(totalTax) + '</td></tr>')
+            .append('<tr><td colspan="6">&nbsp;</td></tr>');
+    }
+}
+
 function removeBasketPosition(idx) {
     console.log('removing basket position at idx=' + idx);
     
