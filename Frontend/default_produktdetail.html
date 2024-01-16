@@ -116,7 +116,7 @@
             }).done(function (response) {
                 console.log(response);
                 
-                /* hier können Sie das Produkt nach eigenen Wünschen rendern und ausgeben. Ich mache es mir einfach und gebe nur einen Teil aus */
+                /* Hier wird das Produkt gerendert */
                 $('#productId').text(response.id);
                 var productId = response.id;
                 $('#productName').text(response.bezeichnung);

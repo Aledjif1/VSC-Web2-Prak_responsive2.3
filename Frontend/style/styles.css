@@ -331,6 +331,7 @@
         margin: 2%;
         float: right;
         width: 40%;
+        min-height: 40em;
     }
     .leftSide{ 
         flex: 1;
@@ -340,6 +341,7 @@
         margin: 2%;
         float: left;
         width: 45%;
+        min-height: 40em;
     }
     .container{
         width: 100%;
@@ -514,6 +516,25 @@
         font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s;
+    }
+
+    #empty-basket-button:hover{
+        background-color: var(--dunkelGraueFarbe);
+    }
+
+    #order-confirmation-button{
+        background-color: #387a3c;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #order-confirmation-button:hover{
+        background-color: var(--dunkelGraueFarbe);
     }
 
     /* Produktinfo (rechte Spalte) */
