@@ -516,6 +516,25 @@
         transition: background-color 0.3s;
     }
 
+    #empty-basket-button:hover{
+        background-color: var(--dunkelGraueFarbe);
+    }
+
+    #order-confirmation-button{
+        background-color: #387a3c;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #order-confirmation-button:hover{
+        background-color: var(--dunkelGraueFarbe);
+    }
+
     /* Produktinfo (rechte Spalte) */
     .add-to-cart-button {
         background-color: var(--dunkleFarbe);
