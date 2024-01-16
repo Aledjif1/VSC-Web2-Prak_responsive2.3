@@ -7,11 +7,8 @@
     <script src="./script/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="./script//urlParameter.js"></script>
-<<<<<<< HEAD
-=======
     <script src="script//sessionHandling.js"></script>
     <script src="script//shopAndBasket.js"></script>
->>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
 
 </head>
 <body>
@@ -108,11 +105,7 @@
                 </div>
                 <div class="form-group">
                     <label for="strassenr">Straße und Hausnr:</label>
-<<<<<<< HEAD
                     <input type="text" id="strassenr" name="strassenr" placeholder="Straße und Hausnr eingeben..." required>
-=======
-                    <input type="text" id="strasse" name="strasse" placeholder="Straße und Hausnr eingeben..." required>
->>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
                 </div>
 
                     <div class="form-row">
@@ -156,13 +149,6 @@
     </footer>
 
 <script>
-<<<<<<< HEAD
-
-
-</script>
-
-
-=======
 
 
 
@@ -188,13 +174,6 @@ $(document).ready(function() {
                 console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
                 alert('Ein Fehler ist aufgetreten');
             });
-
-
-
-            
-
-
-    
 });
 
     $('#emptyShoppingBasketButton').click(function() {
@@ -216,7 +195,7 @@ $('#order-form').submit(function(e) {
             email: $('#email').val().trim()
         },
         adresse: {
-            strasse: $('#strasse').val().trim(),
+            strasse: $('#strassenr').val().trim(),
             plz: $('#plz').val().trim(),
             ort: $('#ort').val().trim(),
             land: $('#land').val().trim()
@@ -336,7 +315,9 @@ $('#addtax').click(function() {
             });
         });
 */
->>>>>>> 637bb5cf52e56d73c276f1ce8c56a885f4946367
+
+</script>
+
 
 </script>
 </body>
