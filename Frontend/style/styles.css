@@ -665,7 +665,7 @@
 
 @media print {
     /* Verstecke Elemente, die nicht gedruckt werden sollen */
-    .header, .footer, .non-printable, button {
+    .header, .footer, .non-printable, button, #non-printable {
         display: none;
     }
 
