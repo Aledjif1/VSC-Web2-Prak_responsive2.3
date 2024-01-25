@@ -77,8 +77,7 @@ function addToBasket(id) {
         for (i = 0; i < basket.length; i++) {
             if (basket[i].product.id == productToAdd.id) {
                 posInBasket = i;
-                break;hnm
-            }
+                break;            }
         }
 
         // if not, add it or otherwise just increase amount

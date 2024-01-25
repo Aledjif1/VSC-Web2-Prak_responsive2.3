@@ -7,6 +7,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="script//sessionHandling.js"></script>
         <script src="script//shopAndBasket.js"></script>
+        <script src="script/urlParameter.js"></script>
     </head>
     <body>
         <!-- Header-Bereich -->
@@ -51,14 +52,14 @@
                 <p><strong>Bank:</strong>Kreissparkasse Albstadt</p>
                 <p><strong>IBAN:</strong> DE12345678987654</p>
                 <p><strong>BIC:</strong> SOLADES3424BL</p>
-                <p><strong>Referenz: Bestellung-000</strong></p>
-                <p><strong>Bestellzeitpunkt:</strong> 16:00 Uhr</p>
                 </div>
-                <h2>Bestellübersicht</h2>
+                <p><strong>Bestellzeitpunkt:</strong> <h2 id="order-time"></h2></p>
+                <h2>Bestellnummer</h2>
+                <h2 id="order-number"></h2>
                 <table class="cart-table">
                     <thead>
                         <tr>
-                            <th id="article-number">Pos.</th>
+                            <th id="article-number">Art. Nr.</th>
                             <th id="article-name">Artikel</th>
                             <th id="unit-price">Einzelpreis</th>
                             <th id="quantity">Menge</th>
@@ -89,6 +90,73 @@
         </footer>
 
         <script>
+            $(document).ready(function() {
+                console.log('loading specific order');
+
+                var id = -1;
+
+                if (existsUrlParameter('bestellId')) 
+                    id = getUrlParameterValue('bestellId');
+
+                console.log('target order id=' + id);
+                productId = id;
+
+                if (id == -1) {
+                    alert('keine id erhalten');
+                    return;
+                }
+			
+			$.ajax({
+                url: 'http://localhost:8000/api/bestellung/gib/' + id,
+                method: 'get',
+                contentType: 'application/json; charset=utf-8',
+                cache: false,
+				dataType: 'json'
+            }).done(function (response) {
+                console.log(response);
+
+                /* Hier wird das Produkt gerendert 
+                $('#order-number').text(response.id);
+                $('#order-time').text(response.bestellzeitpunkt);
+                $('#productPrice').text(formatToEuro(response.bruttopreis));
+                $('basket-position').text(response.bestellpositionen.);
+                */
+
+                $('#order-number').text(response.id);
+                $('#order-time').text(response.bestellzeitpunkt);
+
+                $('#customer-name').text(response.besteller.vorname + ' ' + response.besteller.nachname);
+                $('#customer-email').text(response.besteller.email);
+                $('#customer-address').text(response.besteller.adresse.strasse + ', ' + response.besteller.adresse.plz + ' ' + response.besteller.adresse.ort);
+
+                response.bestellpositionen.forEach(function(position) {
+                    var produktSum = position.produkt.nettopreis + position.produkt.mehrwertsteueranteil;
+
+                    $('#cart-items-table').append(
+                        '<tr>' +
+                            '<td>' + position.id + '</td>' + // Artikel-Nummer
+                            '<td>' + position.produkt.bezeichnung + '</td>' + // Artikelbezeichnung
+                            '<td>' + produktSum.toFixed(2) + '</td>' + // Einzelpreis
+                            '<td>' + position.menge + '</td>' + //Menge
+                            '<td>' + position.bruttosumme.toFixed(2) + ' €</td>' + // Gesamtpreis
+                        '</tr>'
+                    );
+                });
+
+
+
+                $('#total-net').text(response.total.netto.toFixed(2) + ' €');
+                $('#total-vat').text(response.total.mehrwertsteuer.toFixed(2) + ' €');
+                $('#total-gross').text(response.total.brutto.toFixed(2) + ' €');
+
+
+            }).fail(function (jqXHR, statusText, error) {
+                console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
+                alert('Ein Fehler ist aufgetreten');
+            });
+        });
+
+
             $(document).ready(function() {
                 // Laden und Anzeigen des Warenkorbs
                 renderBasketneu('#cart-items-table');
