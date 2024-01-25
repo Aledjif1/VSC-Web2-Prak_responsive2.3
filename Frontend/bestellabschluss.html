@@ -89,6 +89,44 @@
         </footer>
 
         <script>
+
+$(document).ready(function() {
+            console.log('loading specific OrderID');
+
+            var id = -1;
+
+            if (existsUrlParameter('id')) 
+                id = getUrlParameterValue('id');
+
+            console.log('target Order id=' + id);
+            productId = id;
+
+            if (id == -1) {
+                alert('keine id erhalten');
+                return;
+            }                
+			
+			$.ajax({
+                url: 'http://localhost:8000/api/bestellung/gib/' + id,
+                method: 'get',
+                contentType: 'application/json; charset=utf-8',
+                cache: false,
+				dataType: 'json'
+            }).done(function (response) {
+                console.log(response);
+                
+                $('#productId').text(response.id);
+                var productId = response.id;
+                $('#productName').text(response.bezeichnung);
+            }).fail(function (jqXHR, statusText, error) {
+                console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
+                alert('Ein Fehler ist aufgetreten');
+            });
+
+});
+
+
+
             $(document).ready(function() {
                 // Laden und Anzeigen des Warenkorbs
                 renderBasketneu('#cart-items-table');
@@ -96,6 +134,10 @@
                 // Dynamische Aktualisierung der Gesamtsumme
                 updateTotal();
             });
+            // warenkorb leeren
+            //basket = [];
+            //   setJSONSessionItem('shoppingBasket', basket);
+
         </script>
 
     </body>
