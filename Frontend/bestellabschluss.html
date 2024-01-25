@@ -8,8 +8,6 @@
         <script src="script//sessionHandling.js"></script>
         <script src="script//shopAndBasket.js"></script>
         <script src="script/urlParameter.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     </head>
     <body>
         <!-- Header-Bereich -->
@@ -55,9 +53,9 @@
                 <p><strong>IBAN:</strong> DE12345678987654</p>
                 <p><strong>BIC:</strong> SOLADES3424BL</p>
                 </div>
-                <p><strong>Bestellzeitpunkt:</strong> <h2 id="order-time"></h2></p>
-                <h2>Bestellnummer</h2>
-                <h2 id="order-number"></h2>
+                <p>Bestellzeitpunkt: <h3 id="order-time"></h3></p>
+                <p>Bestellnummer:</p>
+                <h3 id="order-number"></h3>
                 <table class="cart-table">
                     <thead>
                         <tr>
@@ -116,26 +114,19 @@
             }).done(function (response) {
                 console.log(response);
 
-                /* Hier wird das Produkt gerendert 
                 $('#order-number').text(response.id);
                 $('#order-time').text(response.bestellzeitpunkt);
-                $('#productPrice').text(formatToEuro(response.bruttopreis));
-                $('basket-position').text(response.bestellpositionen.);
-                */
-
-                $('#order-number').text(response.id);
-                $('#order-time').text(response.bestellzeitpunkt);
-
+                $('#order-total').text(response.total.brutto);
                 $('#customer-name').text(response.besteller.vorname + ' ' + response.besteller.nachname);
                 $('#customer-email').text(response.besteller.email);
                 $('#customer-address').text(response.besteller.adresse.strasse + ', ' + response.besteller.adresse.plz + ' ' + response.besteller.adresse.ort);
 
+                /* Hier wird das Produkt gerendert */
                 response.bestellpositionen.forEach(function(position) {
                     var produktSum = position.produkt.nettopreis + position.produkt.mehrwertsteueranteil;
-
                     $('#cart-items-table').append(
                         '<tr>' +
-                            '<td>' + position.id + '</td>' + // Artikel-Nummer
+                            '<td>' + position.produkt.id + '</td>' + // Artikel-Nummer
                             '<td>' + position.produkt.bezeichnung + '</td>' + // Artikelbezeichnung
                             '<td>' + produktSum.toFixed(2) + '</td>' + // Einzelpreis
                             '<td>' + position.menge + '</td>' + //Menge
@@ -143,12 +134,16 @@
                         '</tr>'
                     );
                 });
+                $('#cart-items-table').append(
+                        '<tr>' +
+                            '<td>' + '</td>' + // Artikel-Nummer
+                            '<td colspan="3">' + '<strong>Gesamtpreis:</strong>' + '</td>' + // Artikelbezeichnung
+                            //'<td>' + '</td>' + // Einzelpreis
+                            //'<td>' + '</td>' + //Menge
+                            '<td id="order-total"><strong>' + response.total.brutto + '</strong> €</td>' + // Gesamtpreis
+                        '</tr>'
+                    );
 
-
-
-                $('#total-net').text(response.total.netto.toFixed(2) + ' €');
-                $('#total-vat').text(response.total.mehrwertsteuer.toFixed(2) + ' €');
-                $('#total-gross').text(response.total.brutto.toFixed(2) + ' €');
 
 
             }).fail(function (jqXHR, statusText, error) {
