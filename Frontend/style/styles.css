@@ -662,3 +662,19 @@
         min-width: 90%; /* Ein Produkt pro Zeile, füllt den verfügbaren Platz */
     }
 }
+
+@media print {
+    /* Verstecke Elemente, die nicht gedruckt werden sollen */
+    .header, .footer, .non-printable, button {
+        display: none;
+    }
+
+    /* Optimiere den Hauptinhalt für den Druck */
+    .content {
+        width: 100%;
+        font-size: 12pt;
+    }
+
+    /* Weitere Anpassungen für den Druck */
+    /* ... */
+}
