@@ -565,6 +565,20 @@
     .back-to-page-button:hover {
         background-color: var(--dunkelGraueFarbe);
     }
+    .order-confirmation-button {
+        background-color: var(--dunkleFarbe);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-decoration: none;
+    }
+    .order-confirmation-button:hover {
+        background-color: var(--dunkelGraueFarbe);
+    }
     /* Produktdetails-Button*/
     .product-detail-button {
         background-color: var(--hellereDunkelGraueFarbe);
