@@ -54,24 +54,6 @@ function formatToEuro(val) {
 function jumpToDetails(id) {
     location.href = 'default_produktdetail.html?id=' + id;
 }
-/* Zähler für Warenkorb */
-/*
-KEINE AHNUNG WANN DAS HIER GENUTZT WIRD; MACHT SO KEINEN SINN!!!
-    // Zähler für den Warenkorb auf 0 setzen
-    let itemCount = 0;
-    // Funktion zum Erhöhen des Zählers und Aktualisieren des Warenkorbs
-    function increaseCartCount() {
-        const addToCartButtons = document.querySelectorAll(".add-to-cart-button");        
-        itemCount++;
-        cartCount.textContent = itemCount;
-    }
-    // Füge Event-Listener zu den Buttons mit der Klasse "add-to-cart-button" hinzu
-    addToCartButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            increaseCartCount();
-        });
-    });
-    */
 
 function addToBasket(id) {
 
@@ -95,8 +77,7 @@ function addToBasket(id) {
         for (i = 0; i < basket.length; i++) {
             if (basket[i].product.id == productToAdd.id) {
                 posInBasket = i;
-                break;hnm
-            }
+                break;            }
         }
 
         // if not, add it or otherwise just increase amount
@@ -163,6 +144,21 @@ function renderBasket(parentNode) {
             ));
             node.append($('<td>').text(formatToEuro(item.product.bruttopreis)));
             node.append($('<td>').text(item.amount));
+            node.append(
+                $('<td>')
+                    .append(
+                        $('<button>')
+                            .attr('type', 'button')
+                            .attr('onClick', 'changeQuantity(' + idx + ', -1)')
+                            .text('-')
+                    )
+                    .append(
+                        $('<button>')
+                            .attr('type', 'button')
+                            .attr('onClick', 'changeQuantity(' + idx + ', 1)')
+                            .text('+')
+                    )
+            );
             node.append($('<td>').text(formatToEuro(sum)));
             node.append(
                 $('<td>')
@@ -272,4 +268,20 @@ function emptyBasket() {
     
     // redraw basket
     renderBasket('#basket > tbody');
+}
+
+function changeQuantity(idx, change) {
+    // Überprüfe, ob die Änderung negative Menge enthält
+    if (basket[idx].amount + change >= 0) {
+        // Ändere die Menge im Warenkorb
+        basket[idx].amount += change;
+
+        // Speichere die Änderung in der Session
+        setJSONSessionItem('shoppingBasket', basket);
+
+        // Aktualisiere die Anzeige des Warenkorbs
+        renderBasket('#basket > tbody');
+    } else {
+        console.error('Die Menge darf nicht negativ sein.');
+    }
 }

@@ -64,6 +64,7 @@
                     <!-- Artikel erscheinen hier -->
                 </table>
             </div>
+            <button type="button" id="emptyShoppingBasketButton">Warenkorb leeren</button>
         </div>
             <!-- Bestellformular -->
         <div class="leftSide">
@@ -104,7 +105,7 @@
                 </div>
                 <div class="form-group">
                     <label for="strassenr">Straße und Hausnr:</label>
-                    <input type="text" id="strasse" name="strasse" placeholder="Straße und Hausnr eingeben..." required>
+                    <input type="text" id="strassenr" name="strassenr" placeholder="Straße und Hausnr eingeben..." required>
                 </div>
 
                     <div class="form-row">
@@ -131,7 +132,7 @@
                 </div>
                 <div class="form-group">
                     <a class="back-to-page-button" href="default_warenkorb.html">zurück zum Warenkorb</a>
-                    <button class="back-to-page-button" type="submit" class="order-confirmation-button">Kostenpflichtig Bestellen</button>
+                    <button type="submit" class="order-confirmation-button">Kostenpflichtig Bestellen</button>
                 </div>
             </form>
         </div>
@@ -182,6 +183,10 @@ $(document).ready(function() {
     
 });
 
+    $('#emptyShoppingBasketButton').click(function() {
+                emptyBasket();
+    });
+
     
 $('#order-form').submit(function(e) {
     e.preventDefault(); // Verhindert das Neuladen der Seite nach dem Absenden des Formulars
@@ -197,7 +202,7 @@ $('#order-form').submit(function(e) {
             email: $('#email').val().trim()
         },
         adresse: {
-            strasse: $('#strasse').val().trim(),
+            strasse: $('#strassenr').val().trim(),
             plz: $('#plz').val().trim(),
             ort: $('#ort').val().trim(),
             land: $('#land').val().trim()
@@ -228,9 +233,95 @@ $('#order-form').submit(function(e) {
                 alert('Ein Fehler ist aufgetreten');
             });
 
+
+    /*
+
+    // Erstelle Adresse
+    $.ajax({
+        url: 'http://localhost:8000/api/adresse',
+        method: 'post',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({
+            strasse: $('#strasse').val(),
+            plz: $('#plz').val(),
+            ort: $('#ort').val(),
+            land: $('#land').val() 
+        }),
+        dataType: 'json',
+        success: function(adresseData) {
+            console.log('Adresse Erfolg:', adresseData);
+
+            // Erstelle Person
+            $.ajax({
+                url: 'http://localhost:8000/api/person',
+                method: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({
+                    anrede: $('#anrede').val(),
+                    vorname: $('#vorname').val(),
+                    nachname: $('#nachname').val(),
+                    email: $('#email').val()
+                }),
+                dataType: 'json',
+                success: function(personData) {
+                    console.log('Person Erfolg:', personData);
+
+                    // Überprüfe, ob Firmendaten vorhanden sind und erstelle Firma
+                    if ($('#firma').val() || $('#ustid').val()) {
+                        $.ajax({
+                            url: 'http://localhost:8000/api/firma',
+                            method: 'POST',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify({
+                                name: $('#firma').val(),
+                                ustid: $('#ustid').val(),
+                                adresseId: adresseData.id,
+                                ansprechpartnerId: personData.id
+                            }),
+                            dataType: 'json',
+                            success: function(firmaData) {
+                                console.log('Firma Erfolg:', firmaData);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Fehler bei der Erstellung der Firma:', error);
+                            }
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Fehler bei der Erstellung der Person:', error);
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Fehler bei der Erstellung der Adresse:', error);
+        }
+    });
+    */
 });
 
 
+
+// VON HR KUTI 
+/*
+$('#addtax').click(function() {
+            console.log('button addtax clicked');
+			
+			$.ajax({
+                url: 'http://localhost:8000/api/mehrwertsteuer',
+                method: 'post',
+				contentType: 'application/json; charset=utf-8',
+                cache: false,
+				data: JSON.stringify(obj)
+            }).done(function (response) {
+                console.log(response);
+                $('#output').html(JSON.stringify(response));
+            }).fail(function (jqXHR, statusText, error) {
+                console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
+                $('#output').html('Ein Fehler ist aufgetreten');
+            });
+        });
+*/
 
 </script>
 </body>

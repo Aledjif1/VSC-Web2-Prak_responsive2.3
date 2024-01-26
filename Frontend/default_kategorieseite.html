@@ -84,13 +84,12 @@
 				dataType: 'json'
             }).done(function (response) {
                 console.log(response);
-                renderProducts(response);
-
-                function renderProducts(produkte) {
-                    var produktListeElement = $('#productList');
+               
+                
+                var produktListeElement = $('#productList');
 
                     // Itteration durch die Produkte
-                    for (var i = 0; i < produkte.length; i++) {
+                    for (var i = 0; i < response.length; i++) {
                         var produkt = response[i];
                         var produktHTML = '<div class="product">';
                         produktHTML += '<div class="product-picture">';
@@ -113,7 +112,8 @@
                         produktHTML += '</div>';
                         produktListeElement.append(produktHTML);
                     };
-                }
+
+                
 
             }).fail(function (jqXHR, statusText, error) {
                 console.log('Response Code: ' + jqXHR.status + ' - Fehlermeldung: ' + jqXHR.responseText);
