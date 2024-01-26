@@ -104,7 +104,7 @@ function addToBasket(id) {
     });
 }
 
-function renderBasket(parentNode) {
+function renderBasket(parentNode, showButtons = true) {
     // get basket data from session
     if (existsSessionItem('shoppingBasket')) 
         basket = getJSONSessionItem('shoppingBasket');
@@ -144,31 +144,34 @@ function renderBasket(parentNode) {
             ));
             node.append($('<td>').text(formatToEuro(item.product.bruttopreis)));
             node.append($('<td>').text(item.amount));
-            node.append(
-                $('<td>')
-                    .append(
-                        $('<button>')
-                            .attr('type', 'button')
-                            .attr('onClick', 'changeQuantity(' + idx + ', -1)')
-                            .text('-')
-                    )
-                    .append(
-                        $('<button>')
-                            .attr('type', 'button')
-                            .attr('onClick', 'changeQuantity(' + idx + ', 1)')
-                            .text('+')
-                    )
-            );
             node.append($('<td>').text(formatToEuro(sum)));
-            node.append(
-                $('<td>')
-                    .append($('<button>')
-                        .attr('type', 'button')
-                        .attr('class', 'add-to-cart-button')
-                        .attr('onClick', 'removeBasketPosition(' + idx + ')')
-                        .text('Entfernen')
-                    )
-            );
+            if (showButtons) {
+                node.append(
+                    $('<td>')
+                        .append(
+                            $('<button>')
+                                .attr('type', 'button')
+                                .attr('onClick', 'changeQuantity(' + idx + ', -1)')
+                                .text('-')
+                        )
+                        .append(
+                            $('<button>')
+                                .attr('type', 'button')
+                                .attr('onClick', 'changeQuantity(' + idx + ', 1)')
+                                .text('+')
+                        )
+                );
+                node.append(
+                    $('<td>')
+                        .append($('<button>')
+                            .attr('type', 'button')
+                            .attr('class', 'add-to-cart-button')
+                            .attr('onClick', 'removeBasketPosition(' + idx + ')')
+                            .text('Entfernen')
+                        )
+                );
+            } 
+            
 
             // output node
             $(parentNode).append(node);
@@ -181,6 +184,7 @@ function renderBasket(parentNode) {
             .append('<tr><td colspan="6">&nbsp;</td></tr>');
     }
 }
+
 
 function renderBasketneu(parentNode) {
     // get basket data from session
